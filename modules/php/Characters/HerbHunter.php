@@ -2,6 +2,8 @@
 
 namespace BANG\Characters;
 
+use BANG\Managers\Rules;
+
 class HerbHunter extends \BANG\Models\Player
 {
   public function __construct($row = null)
@@ -12,5 +14,13 @@ class HerbHunter extends \BANG\Models\Player
     $this->bullets = 4;
     $this->expansion = DODGE_CITY;
     parent::__construct($row);
+  }
+
+  public function onPlayerEliminated($player)
+  {
+    if (!Rules::isAbilityAvailable()) {
+      return;
+    }
+    $this->drawCards(2);
   }
 }
