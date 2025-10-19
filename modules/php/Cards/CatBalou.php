@@ -13,7 +13,7 @@ class CatBalou extends \BANG\Models\BrownCard
     $this->copies = [
       BASE_GAME => ['KH', '9D', '10D', 'JD'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['8C'],
     ];
     $this->effect = [
       'type' => DISCARD,

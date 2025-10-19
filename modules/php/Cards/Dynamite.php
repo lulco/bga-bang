@@ -20,7 +20,7 @@ class Dynamite extends \BANG\Models\BlueCard
     $this->copies = [
       BASE_GAME => ['2H'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['10C'],
     ];
   }
 

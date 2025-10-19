@@ -13,7 +13,7 @@ class Mustang extends \BANG\Models\BlueCard
     $this->copies = [
       BASE_GAME => ['8H', '9H'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['5H'],
     ];
     $this->effect = ['type' => RANGE_INCREASE];
   }

@@ -16,7 +16,7 @@ class GeneralStore extends \BANG\Models\BrownCard
     $this->copies = [
       BASE_GAME => ['9C', 'QS'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['AS'],
     ];
     $this->effect = ['type' => OTHER];
   }
