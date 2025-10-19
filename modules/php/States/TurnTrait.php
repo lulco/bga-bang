@@ -111,7 +111,7 @@ trait TurnTrait
   {
     Stack::unsuspendNext(ST_DISCARD_EXCESS);
     $player = Players::getActive();
-    if ($player->countHand() <= $player->getHp()) {
+    if ($player->countHand() <= $player->getMaxCards()) {
       Stack::finishState();
     }
   }
@@ -120,7 +120,7 @@ trait TurnTrait
   {
     $player = Players::getActive();
     return [
-      'amount' => $player->countHand() - $player->getHp(),
+      'amount' => $player->countHand() - $player->getMaxCards(),
       '_private' => [
         'active' => $player->getHand()->toArray(),
       ],

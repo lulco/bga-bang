@@ -13,4 +13,9 @@ class SeanMallory extends \BANG\Models\Player
     $this->expansion = DODGE_CITY;
     parent::__construct($row);
   }
+
+  public function getMaxCards()
+  {
+    return 10;
+  }
 }
