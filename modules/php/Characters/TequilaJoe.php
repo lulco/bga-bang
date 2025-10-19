@@ -2,7 +2,11 @@
 
 namespace BANG\Characters;
 
-class TequilaJoe extends \BANG\Models\Player
+use BANG\Cards\Beer;
+use BANG\Managers\Rules;
+use BANG\Models\Player;
+
+class TequilaJoe extends Player
 {
   public function __construct($row = null)
   {
@@ -12,5 +16,18 @@ class TequilaJoe extends \BANG\Models\Player
     $this->bullets = 4;
     $this->expansion = DODGE_CITY;
     parent::__construct($row);
+  }
+
+  public function modifyCardEffect($card)
+  {
+    if (!Rules::isAbilityAvailable()) {
+      return parent::modifyCardEffect($card);
+    }
+    if (!$card instanceof Beer) {
+      return parent::modifyCardEffect($card);
+    }
+    $effect = $card->getEffect();
+    $effect['amount'] = 2;
+    return $effect;
   }
 }

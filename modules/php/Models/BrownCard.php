@@ -94,12 +94,14 @@ class BrownCard extends AbstractCard
 
   public function play($player, $args)
   {
+    $effect = $player->modifyCardEffect($this);
+
     // Played card always go to the discard
     $this->discard();
 
-    switch ($this->effect['type']) {
+    switch ($effect['type']) {
       case BASIC_ATTACK:
-        $ids = $this->effect['impacts'] == ALL_OTHER ? $player->getOrderedOtherPlayers() : [$args['player']];
+        $ids = $effect['impacts'] == ALL_OTHER ? $player->getOrderedOtherPlayers() : [$args['player']];
         $targetCardId = $args['type'] === LOCATION_INPLAY ? (int) $args['arg'] : null;
         $player->attack($this, $ids, $targetCardId, !!$args['secondCardId']);
         if ($args['secondCardId']) {
@@ -116,7 +118,7 @@ class BrownCard extends AbstractCard
       case DISCARD:
         // Drawing from deck
         if (!isset($args['type'])) {
-          $player->drawCards($this->effect['amount']);
+          $player->drawCards($effect['amount']);
           return null;
         }
 
@@ -124,7 +126,7 @@ class BrownCard extends AbstractCard
         $victim = Players::get($args['player']);
         $card = $args['type'] == 'player' ? $victim->getRandomCardInHand() : Cards::get($args['arg']);
         // TODO: Support Panic yourself more elegantly
-        if ($this->effect['type'] == DRAW) {
+        if ($effect['type'] == DRAW) {
           Cards::stole($card, $player);
           Notifications::stoleCard($player, $victim, $card, $args['type'] == LOCATION_INPLAY);
         } else {
@@ -135,7 +137,7 @@ class BrownCard extends AbstractCard
 
       case LIFE_POINT_MODIFIER:
         $targets = [];
-        if ($this->effect['impacts'] == ALL) {
+        if ($effect['impacts'] == ALL) {
           $targets = Players::getLivingPlayers();
         } else {
           // TODO: Players::getPlayer() does not exist however code works on production correctly. Investigate and delete this possibility if never used
@@ -144,7 +146,7 @@ class BrownCard extends AbstractCard
         }
 
         foreach ($targets as $target) {
-          $target->gainLife($this->effect['amount']);
+          $target->gainLife($effect['amount']);
         }
         break;
     }
