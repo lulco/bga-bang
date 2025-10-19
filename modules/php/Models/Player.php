@@ -672,7 +672,7 @@ class Player extends \BANG\Helpers\DB_Manager
     return [
       RULE_PHASE_ONE_CARDS_DRAW_BEGINNING => $defaultAmount,
       RULE_PHASE_ONE_PLAYER_ABILITY_DRAW => false,
-      RULE_PHASE_ONE_CARDS_DRAW_END => 0
+      RULE_PHASE_ONE_CARDS_DRAW_END => 0,
     ];
   }
 
@@ -1111,5 +1111,16 @@ class Player extends \BANG\Helpers\DB_Manager
       default:
         return clienttranslate('no reason actually, please report a bug if you see this message');
     }
+  }
+
+  /**
+   * Used when character can change card effect
+   *
+   * @param AbstractCard $card
+   * @return array{type: int, impacts: int, amount: int, range?: int}
+   */
+  public function modifyCardEffect($card)
+  {
+    return $card->getEffect();
   }
 }
