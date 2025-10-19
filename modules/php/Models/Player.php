@@ -93,6 +93,15 @@ class Player extends \BANG\Helpers\DB_Manager
     return $this->hp;
   }
 
+    /**
+     * max cards on hand at the end of turn
+     * @return int|null
+     */
+  public function getMaxCards()
+  {
+    return $this->hp;
+  }
+
   public function getRole()
   {
     return $this->role;
