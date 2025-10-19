@@ -12,20 +12,29 @@ class GameOptions
 
   public static function getExpansions()
   {
+    $expansions = [];
     switch ((int) bang::get()->getGameStateValue('optionExpansions')) {
       case OPTION_HIGH_NOON_ONLY:
-        return [HIGH_NOON];
+        $expansions = [HIGH_NOON];
+        break;
       case OPTION_FISTFUL_OF_CARDS_ONLY:
-        return [FISTFUL_OF_CARDS];
+        $expansions = [FISTFUL_OF_CARDS];
+        break;
       case OPTION_HIGH_NOON_AND_FOC:
-        return [HIGH_NOON, FISTFUL_OF_CARDS];
+        $expansions = [HIGH_NOON, FISTFUL_OF_CARDS];
+        break;
       case OPTION_HIGH_NOON_OR_FOC:
         $expansionIndex = bga_rand(0, 1);
         $chosenExpansion = [HIGH_NOON, FISTFUL_OF_CARDS][$expansionIndex];
-        return [$chosenExpansion];
-      default:
-        return [];
+        $expansions = [$chosenExpansion];
+        break;
     }
+
+    if ((bool)bang::get()->getGameStateValue('optionDodgeCity')) {
+      $expansions[] = DODGE_CITY;
+    }
+
+    return $expansions;
   }
 
   /**

@@ -76,8 +76,10 @@ class bang extends Table
       'optionHighNoon' => OPTION_HIGH_NOON_EXPANSION,
       'optionFistful' => OPTION_FISTFUL_OF_CARDS_EXPANSION,
       'optionHighNoonAndFistful' => OPTION_HIGH_NOON_AND_FOC_EXPANSION,
+      'optionDodgeCity' => OPTION_DODGE_CITY,
     ]);
   }
+
   public static function get()
   {
     return self::$instance;

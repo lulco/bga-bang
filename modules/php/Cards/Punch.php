@@ -1,6 +1,7 @@
 <?php
 namespace BANG\Cards;
 
+use BANG\Managers\Rules;
 use BANG\Models\BangActionCard;
 
 class Punch extends BangActionCard
@@ -22,5 +23,14 @@ class Punch extends BangActionCard
       'range' => 1,
       'impacts' => SPECIFIC_RANGE,
     ];
+  }
+
+  public function getPlayOptions($player)
+  {
+    $playOptions = [
+        'target_types' => [TARGET_PLAYER],
+        'targets' => $this->getTargetablePlayers($player),
+    ];
+    return $playOptions;
   }
 }
