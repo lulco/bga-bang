@@ -81,6 +81,7 @@ class Cards extends \BANG\Helpers\Pieces
 
     CARD_BINOCULAR => 'Binocular',
     CARD_HIDEOUT => 'Hideout',
+    CARD_PUNCH => 'Punch',
   ];
 
   /*
