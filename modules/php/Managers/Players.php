@@ -213,6 +213,8 @@ class Players extends \BANG\Helpers\DB_Manager
 
     PIXIE_PETE => 'PixiePete',
     BILL_NOFACE => 'BillNoface',
+    GREG_DIGGER => 'GregDigger',
+    HERB_HUNTER => 'HerbHunter',
   ];
 
   public static function getAvailableCharacters($expansions)
