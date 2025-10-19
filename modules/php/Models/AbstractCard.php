@@ -187,6 +187,15 @@ class AbstractCard implements \JsonSerializable
   }
 
   /**
+   * @param Player $player
+   * @return void
+   */
+  public function playCard($player)
+  {
+    Cards::play($this->id);
+  }
+
+  /**
    * getReactionOptions: default function to handle possible reaction (attack => defense)
    * return: list of options (cards/abilities) that can be used
    */
@@ -202,7 +211,7 @@ class AbstractCard implements \JsonSerializable
   {
     if (($this->effect['type'] ?? null) == BASIC_ATTACK) {
       if ($card->getColor() == BROWN) {
-        Cards::play($card->id);
+        $card->playCard($player);
         Notifications::cardPlayed($player, $card);
       } else {
         // E.g. reacting to Bang! using a barrel
