@@ -13,7 +13,7 @@ class Missed extends \BANG\Models\BrownCard
     $this->copies = [
       BASE_GAME => ['10C', 'JC', 'QC', 'KC', 'AC', '2S', '3S', '4S', '5S', '6S', '7S', '8S'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['8D'],
     ];
     $this->effect = ['type' => DEFENSIVE];
   }

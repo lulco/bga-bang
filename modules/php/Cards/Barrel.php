@@ -16,7 +16,7 @@ class Barrel extends \BANG\Models\BlueCard
     $this->copies = [
       BASE_GAME => ['QS', 'KS'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['AC'],
     ];
     $this->effect = ['type' => DEFENSIVE];
   }

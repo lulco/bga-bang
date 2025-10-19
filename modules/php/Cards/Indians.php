@@ -14,7 +14,7 @@ class Indians extends \BANG\Models\BrownCard
     $this->copies = [
       BASE_GAME => ['KD', 'AD'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['5D'],
     ];
     $this->effect = [
       'type' => OTHER,

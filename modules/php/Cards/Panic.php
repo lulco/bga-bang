@@ -13,7 +13,7 @@ class Panic extends \BANG\Models\BrownCard
     $this->copies = [
       BASE_GAME => ['JH', 'QH', 'AH', '8D'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['JH'],
     ];
     $this->effect = [
       'type' => DRAW,

@@ -13,7 +13,7 @@ class RevCarabine extends \BANG\Models\WeaponCard
     $this->copies = [
       BASE_GAME => ['AC'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['5S'],
     ];
     $this->effect = [
       'type' => OTHER,

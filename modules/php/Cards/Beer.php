@@ -17,7 +17,7 @@ class Beer extends \BANG\Models\BrownCard
     $this->copies = [
       BASE_GAME => ['6H', '7H', '8H', '9H', '10H', 'JH'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['6H', '6S'],
     ];
     $this->effect = [
       'type' => LIFE_POINT_MODIFIER,
