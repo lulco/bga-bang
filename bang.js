@@ -298,9 +298,10 @@ define([
 
       onClickUseAbility() {
         let SID_KETCHUM = 9,
-          JOURDONNAIS = 13;
+            JOURDONNAIS = 13,
+            CHUCK_WENGAM = 27;
         this._selectedCards = [];
-        if (this._useAbilityOption === JOURDONNAIS) {
+        if (this._useAbilityOption === JOURDONNAIS || this._useAbilityOption === CHUCK_WENGAM) {
           this.onClickConfirmUseAbility();
         } else if (this._useAbilityOption === SID_KETCHUM) {
           // Sid Ketchum power
