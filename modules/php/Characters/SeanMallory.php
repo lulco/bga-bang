@@ -2,6 +2,8 @@
 
 namespace BANG\Characters;
 
+use BANG\Managers\Rules;
+
 class SeanMallory extends \BANG\Models\Player
 {
   public function __construct($row = null)
@@ -16,6 +18,9 @@ class SeanMallory extends \BANG\Models\Player
 
   public function getMaxCards()
   {
+    if (!Rules::isAbilityAvailable()) {
+      return parent::getMaxCards();
+    }
     return 10;
   }
 }
