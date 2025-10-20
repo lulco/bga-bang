@@ -37,6 +37,7 @@ class AbstractCard implements \JsonSerializable
   protected $id;
   protected $color;
   protected $value;
+  protected $border = '';
 
   // Static information about cards
   protected $type;
@@ -69,6 +70,7 @@ class AbstractCard implements \JsonSerializable
       'type' => $this->type,
       'color' => $this->color,
       'value' => $this->value,
+      'border' => $this->border,
     ];
   }
 

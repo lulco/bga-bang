@@ -55,6 +55,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         enforceTooltip: ocard.enforceTooltip === undefined ? false : ocard.enforceTooltip,
         extraClass: '',
         colorOverride: this.gamedatas?.eventActive?.colorOverride || '',
+        border: ocard.border,
       };
 
       if (this._cards[ocard.type]) {
@@ -78,7 +79,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         type: 'back',
         flipped: true,
         extraClass: '',
-        colorOverride: ''
+        colorOverride: '',
+        border: ''
       };
     },
 
@@ -96,6 +98,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       var card = this.getCard(ocard);
       card.uid = card.id + suffix;
       if ($('bang-card-' + card.uid)) dojo.destroy('bang-card-' + card.uid);
+
+      console.log(card);
 
       var div = dojo.place(this.format_block('jstpl_card', card), container);
       if (card.flipped === '' || card.enforceTooltip)
