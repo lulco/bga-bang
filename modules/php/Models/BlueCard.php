@@ -8,6 +8,8 @@ use BANG\Managers\Rules;
  */
 class BlueCard extends AbstractCard
 {
+  protected $border = 'blue';
+
   public function getColor()
   {
     return BLUE;

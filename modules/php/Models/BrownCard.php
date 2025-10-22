@@ -10,10 +10,13 @@ use BANG\Managers\Rules;
  */
 class BrownCard extends AbstractCard
 {
+  protected $border = 'brown';
+
   public function getColor()
   {
     return BROWN;
   }
+
   public function isAction()
   {
     return true;

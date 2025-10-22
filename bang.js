@@ -299,7 +299,9 @@ define([
       onClickUseAbility() {
         let SID_KETCHUM = 9,
             JOURDONNAIS = 13,
-            CHUCK_WENGAM = 27;
+            CHUCK_WENGAM = 27,
+            JOSE_DELGADO = 26
+        ;
         this._selectedCards = [];
         if (this._useAbilityOption === JOURDONNAIS || this._useAbilityOption === CHUCK_WENGAM) {
           this.onClickConfirmUseAbility();
@@ -314,6 +316,21 @@ define([
 
           var oldStateDescription = this.gamedatas.gamestate.descriptionmyturn;
           this.gamedatas.gamestate.descriptionmyturn = _('You must select two cards');
+          this.updatePageTitle();
+          this.gamedatas.gamestate.descriptionmyturn = oldStateDescription;
+
+          this.removeActionButtons();
+          this.addActionButton('buttonCancelUseAbility', _('Cancel'), () => this.restartState(), null, false, 'gray');
+        } else if (this._useAbilityOption === JOSE_DELGADO) {
+          var cards = dojo.query('#hand .bang-card[data-border="blue"]').map((card) => {
+            return { id: parseInt(dojo.attr(card, 'data-id')) };
+          });
+
+          this._amount = 1;
+          this.makeCardSelectable(cards, 'useAbility');
+
+          var oldStateDescription = this.gamedatas.gamestate.descriptionmyturn;
+          this.gamedatas.gamestate.descriptionmyturn = _('You must select one card');
           this.updatePageTitle();
           this.gamedatas.gamestate.descriptionmyturn = oldStateDescription;
 

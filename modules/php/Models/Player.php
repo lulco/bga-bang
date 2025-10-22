@@ -43,6 +43,18 @@ class Player extends \BANG\Helpers\DB_Manager
   protected $livingStatus;
   protected $agreedToDisclaimer;
 
+  /**
+   * limit for ability usage per turn, 0 means unlimited
+   * @var int
+   */
+  protected $abilityUsageLimit = 0;
+
+  /**
+   * counter for ability usage
+   * @var int
+   */
+  protected $abilityUsedCount;
+
   public function __construct($row)
   {
     if ($row != null) {
@@ -62,6 +74,7 @@ class Player extends \BANG\Helpers\DB_Manager
       $this->altCharacter = (int) $row['player_alt_character'];
       $this->livingStatus = (int) $row['player_unconscious'];
       $this->agreedToDisclaimer = isset($row['player_agreed_to_disclaimer']) ? (int) $row['player_agreed_to_disclaimer'] === 1 : null;
+      $this->abilityUsedCount = isset($row['player_ability_used_count']) ? (int)$row['player_ability_used_count'] : 0;
     }
   }
 
@@ -283,8 +296,9 @@ class Player extends \BANG\Helpers\DB_Manager
   public function save($eliminate = false)
   {
     $unconsciousStatus = $eliminate ? ', `player_unconscious` = 1' : '';
+    $abilityUsedCount = ", `player_ability_used_count` = {$this->abilityUsedCount}";
     $newHP = $eliminate && $this->hp < 0 ? 0 : $this->hp;
-    self::DbQuery("UPDATE player SET `player_hp` = {$newHP}{$unconsciousStatus} WHERE `player_id` = {$this->id}");
+    self::DbQuery("UPDATE player SET `player_hp` = {$newHP}{$unconsciousStatus}{$abilityUsedCount} WHERE `player_id` = {$this->id}");
   }
 
   /*************************
@@ -417,6 +431,21 @@ class Player extends \BANG\Helpers\DB_Manager
       Notifications::lostLife($this, $amount);
     }
     $this->addRevivalAtomOrEliminate();
+  }
+
+  /**
+   * @return void
+   */
+  public function incrementAbilityUsage()
+  {
+    $this->abilityUsedCount += 1;
+    $this->save();
+  }
+
+  public function resetAbilityUsage()
+  {
+    $this->abilityUsedCount = 0;
+    $this->save();
   }
 
   /**
