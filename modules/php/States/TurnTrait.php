@@ -155,6 +155,9 @@ trait TurnTrait
    */
   public function stEndOfTurn()
   {
+    $player = Players::getActive();
+    $player->resetAbilityUsage();
+
     // To make sure we will switch to next player after this one.
     // We had a bug when Suzy Lafayette was drawing a card and "capturing" active player status while real active player was dying
     bang::get()->gamestate->changeActivePlayer(Rules::getCurrentPlayerId());

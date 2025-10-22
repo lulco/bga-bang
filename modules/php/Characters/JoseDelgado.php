@@ -15,6 +15,7 @@ class JoseDelgado extends Player
     $this->character_name = clienttranslate('José Delgado');
     $this->text = [clienttranslate('Twice in his turn, he may discard a blue card from the hand to draw 2 cards.')];
     $this->bullets = 4;
+    $this->abilityUsageLimit = 2;
     $this->expansion = DODGE_CITY;
     parent::__construct($row);
   }
@@ -26,17 +27,29 @@ class JoseDelgado extends Player
 
   private function addAbility($t)
   {
-      // TODO check if he has blue cards
+    if (!Rules::isAbilityAvailable() || $this->abilityUsedCount >= $this->abilityUsageLimit) {
+      return $t;
+    }
 
-    if (Rules::isAbilityAvailable() && $this->countHand() > 1) { // TODO add ability counter
+    $blueCards = $this->getHand()->filter(function ($card) {
+      return $card->getColor() === BLUE;
+    });
+    if ($blueCards->count() > 0) {
       $t['character'] = JOSE_DELGADO;
     }
     return $t;
   }
 
+  /**
+   * @return void
+   */
   public function useAbility($args)
   {
-      // TODO check card if it is blue
+    if (!Rules::isAbilityAvailable() || $this->abilityUsedCount >= $this->abilityUsageLimit) {
+      return;
+    }
+
+    // TODO check card if it is blue
 
     Notifications::tell(
       clienttranslate('${player_name} uses the ability of Jose Delgado by discarding 1 blue card to draw 2 cards'),
@@ -46,5 +59,6 @@ class JoseDelgado extends Player
     Cards::discardMany($args);
     Notifications::discardedCards($this, $args);
     $this->drawCards(2);
+    $this->incrementAbilityUsage();
   }
 }
