@@ -22,9 +22,9 @@ class Jourdonnais extends \BANG\Models\Player
     return isset($atom['used']) && in_array($this->character, $atom['used']);
   }
 
-  public function getDefensiveOptions()
+  public function getDefensiveOptions($attackingCard)
   {
-    $res = parent::getDefensiveOptions();
+    $res = parent::getDefensiveOptions($attackingCard);
 
     if (!$this->abilityHaveBeenUsed() && Rules::isAbilityAvailable()) {
       $res['character'] = $this->character;

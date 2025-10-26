@@ -56,7 +56,7 @@ class Duel extends \BANG\Models\BrownCard
 
   public function getReactionOptions($player)
   {
-    return $player->getBangCards();
+    return $player->getBangCards($this);
   }
 
   public function pass($player)

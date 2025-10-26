@@ -614,10 +614,11 @@ class Player extends \BANG\Helpers\DB_Manager
     return !Rules::isIgnoreCardsInPlay() && !is_null($weapon) && $weapon->getType() === CARD_VOLCANIC;
   }
 
-  /*
-   * return the list of bang cards (for indians and duel for instance)
+  /**
+   * @param AbstractCard $attackingCard
+   * @return array the list of bang cards (for indians and duel for instance)
    */
-  public function getBangCards($options = [])
+  public function getBangCards($attackingCard, $options = [])
   {
     if (empty($options)) {
       $options = ['target_types' => [TARGET_NONE]];
@@ -667,9 +668,10 @@ class Player extends \BANG\Helpers\DB_Manager
 
   /**
    * Returns defensive options
+   * @param AbstractCard $attackingCard
    * @return array
    */
-  public function getDefensiveOptions()
+  public function getDefensiveOptions($attackingCard)
   {
     $missedNeeded = Stack::top()['missedNeeded'] ?? 1;
 

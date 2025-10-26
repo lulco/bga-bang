@@ -29,9 +29,9 @@ class CalamityJanet extends \BANG\Models\Player
     return $atom;
   }
 
-  public function getBangCards($targetType = TARGET_NONE)
+  public function getBangCards($attackingCard, $targetType = TARGET_NONE)
   {
-    $res = parent::getBangCards();
+    $res = parent::getBangCards($attackingCard);
     if (Rules::isAbilityAvailable()) {
       $hand = Cards::getHand($this->id);
       foreach ($hand as $card) {
@@ -47,9 +47,9 @@ class CalamityJanet extends \BANG\Models\Player
     return $res;
   }
 
-  public function getDefensiveOptions()
+  public function getDefensiveOptions($attackingCard)
   {
-    $missed = parent::getDefensiveOptions();
+    $missed = parent::getDefensiveOptions($attackingCard);
     if (Rules::isAbilityAvailable()) {
       $amount = Stack::top()['missedNeeded'] ?? 1;
       $bangs = parent::getBangCards();

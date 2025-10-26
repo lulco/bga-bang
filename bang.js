@@ -300,10 +300,11 @@ define([
         let SID_KETCHUM = 9,
             JOURDONNAIS = 13,
             CHUCK_WENGAM = 27,
-            JOSE_DELGADO = 26
+            JOSE_DELGADO = 26,
+            APACHE_KID = 17
         ;
         this._selectedCards = [];
-        if (this._useAbilityOption === JOURDONNAIS || this._useAbilityOption === CHUCK_WENGAM) {
+        if (this._useAbilityOption === JOURDONNAIS || this._useAbilityOption === CHUCK_WENGAM || this._useAbilityOption === APACHE_KID) {
           this.onClickConfirmUseAbility();
         } else if (this._useAbilityOption === SID_KETCHUM) {
           // Sid Ketchum power

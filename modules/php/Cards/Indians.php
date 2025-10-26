@@ -4,9 +4,9 @@ use BANG\Models\Player;
 
 class Indians extends \BANG\Models\BrownCard
 {
-  public function __construct($id = null, $copy = '')
+  public function __construct($params = null)
   {
-    parent::__construct($id, $copy);
+    parent::__construct($params);
     $this->type = CARD_INDIANS;
     $this->name = clienttranslate('Indians!');
     $this->text = clienttranslate('All other players discard a BANG! or lose 1 life point.');
@@ -38,7 +38,7 @@ class Indians extends \BANG\Models\BrownCard
 
   public function getReactionOptions($player)
   {
-    return $player->getBangCards();
+    return $player->getBangCards($this);
   }
 
   public function pass($player)

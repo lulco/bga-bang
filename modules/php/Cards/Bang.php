@@ -72,7 +72,7 @@ class Bang extends BangActionCard
   private function getBangsWithoutThisCard($player)
   {
     $bangOptions = [ 'targets' => Players::getLivingPlayers($player->getId())->getIds() ];
-    return array_values(array_filter($player->getBangCards($bangOptions)['cards'], function ($card) {
+    return array_values(array_filter($player->getBangCards($this, $bangOptions)['cards'], function ($card) {
       return $card['id'] !== $this->getId();
     }));
   }

@@ -203,7 +203,7 @@ class AbstractCard implements \JsonSerializable
    */
   public function getReactionOptions(Player $player)
   {
-    return $player->getDefensiveOptions();
+    return $player->getDefensiveOptions($this);
   }
 
   /**
