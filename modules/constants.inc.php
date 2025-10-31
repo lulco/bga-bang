@@ -117,6 +117,7 @@ define('FISTFUL_OF_CARDS', 3);
  */
 define('BROWN', 0);
 define('BLUE', 1);
+define('GREEN', 2);
 
 define('CARD_SCHOFIELD', 0);
 define('CARD_VOLCANIC', 1);
@@ -283,6 +284,7 @@ define('SYMBOL_DYNAMITE', 15);
 define('LOCATION_SELECTION', 'selection');
 define('LOCATION_HAND', 'hand');
 define('LOCATION_INPLAY', 'inPlay');
+define('LOCATION_INPLAY_INACTIVE', 'inPlayInactive');
 define('LOCATION_FLIPPED', 'flipped');
 define('LOCATION_DECK', 'deck');
 define('LOCATION_DISCARD', 'discard');

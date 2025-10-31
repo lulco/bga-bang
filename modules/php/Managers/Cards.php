@@ -146,7 +146,7 @@ class Cards extends \BANG\Helpers\Pieces
 
   public static function getInPlay($pId = null)
   {
-    return self::getInLocation([LOCATION_INPLAY, $pId ?? '%']);
+    return self::getInLocation([LOCATION_INPLAY, $pId ?? '%'])->merge(self::getInLocation([LOCATION_INPLAY_INACTIVE, $pId ?? '%']));
   }
 
   public static function play($id)
@@ -167,9 +167,9 @@ class Cards extends \BANG\Helpers\Pieces
     }
   }
 
-  public static function equip($cardId, $pId)
+  public static function equip($cardId, $pId, $location = LOCATION_INPLAY)
   {
-    self::move($cardId, LOCATION_INPLAY, $pId);
+    self::move($cardId, $location, $pId);
   }
 
   public static function stole($mixed, $player)

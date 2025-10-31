@@ -18,7 +18,7 @@ use BANG\Managers\EventCards;
  * @property-read array $effect array with type, impact and sometimes range
  * @property-read array $copies
  */
-class AbstractCard implements \JsonSerializable
+abstract class AbstractCard implements \JsonSerializable
 {
   public function __construct($params = null)
   {
@@ -37,6 +37,8 @@ class AbstractCard implements \JsonSerializable
   protected $id;
   protected $color;
   protected $value;
+  protected $location;
+  protected $status;
   protected $border = '';
 
   // Static information about cards
@@ -71,6 +73,7 @@ class AbstractCard implements \JsonSerializable
       'color' => $this->color,
       'value' => $this->value,
       'border' => $this->border,
+      'status' => $this->status,
     ];
   }
 
