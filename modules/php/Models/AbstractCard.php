@@ -1,28 +1,33 @@
 <?php
+
 namespace BANG\Models;
+
 use BANG\Core\Stack;
 use BANG\Managers\Cards;
 use BANG\Core\Notifications;
-use BANG\Managers\EventCards;
+use JsonSerializable;
 
 /**
  * AbstractCard: base class to handle actions cards
  *
- * @property-read $id
- * @property-read $color
+ * @property-read int $id
+ * @property-read int $color
  * @property-read int $value
- * @property-read $type
+ * @property-read int $type
  * @property-read string $name
  * @property-read string $text
  * @property-read array $symbols
  * @property-read array $effect array with type, impact and sometimes range
  * @property-read array $copies
  */
-abstract class AbstractCard implements \JsonSerializable
+abstract class AbstractCard implements JsonSerializable
 {
-  public function __construct($params = null)
+  /**
+   * @param array{id: int|string, value?: int|string, color?: int}|null $params
+   */
+  public function __construct(?array $params = null)
   {
-    if ($params != null) {
+    if ($params !== null) {
       $this->id = (int) $params['id'];
       if (array_key_exists('value', $params) && array_key_exists('color', $params)) {
         $this->value = $params['value'];
@@ -38,7 +43,6 @@ abstract class AbstractCard implements \JsonSerializable
   protected $color;
   protected $value;
   protected $location;
-  protected $status;
   protected $border = '';
 
   // Static information about cards
@@ -73,7 +77,7 @@ abstract class AbstractCard implements \JsonSerializable
       'color' => $this->color,
       'value' => $this->value,
       'border' => $this->border,
-      'status' => $this->status,
+      'location' => $this->location,
     ];
   }
 
