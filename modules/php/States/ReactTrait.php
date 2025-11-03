@@ -50,8 +50,8 @@ trait ReactTrait
     $ctx = Stack::getCtx();
     $player = Players::getActive();
     if ($ctx['state'] === ST_REACT) {
-        $card = Cards::getCardByType($ctx['src']['type'], $ctx['src']);
-        $ctx['_private']['active'] = $card->getReactionOptions($player);
+      $card = Cards::getCardByType($ctx['src']['type'], $ctx['src']);
+      $ctx['_private']['active'] = $card->getReactionOptions($player);
       return $ctx;
     } else {
       return null; // This might happen when we shifted ST_REACT out of Stack but BGA for some reasons still wants args for it

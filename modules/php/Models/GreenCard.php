@@ -1,13 +1,17 @@
 <?php
+
 namespace BANG\Models;
+
 use BANG\Managers\Cards;
 use BANG\Managers\Rules;
 
 /*
- * BlueCard:  class to handle blue cards
+ * GreenCard: class to handle green cards
  */
 abstract class GreenCard extends AbstractCard
 {
+  use CardPlayTrait;
+
   protected $border = 'green';
 
   public function getColor()
@@ -15,13 +19,20 @@ abstract class GreenCard extends AbstractCard
     return GREEN;
   }
 
-  public function isEquipment()
+  public function targetLocationAfterPlay(): string
   {
-    return true;
+    if ($this->location === LOCATION_HAND) {
+      return LOCATION_INPLAY_INACTIVE;
+    }
+    return LOCATION_DISCARD;
   }
 
   public function getPlayOptions($player)
   {
+    if ($this->location === LOCATION_INPLAY) {
+      return ['target_types' => [TARGET_NONE]];
+    }
+
     foreach ($player->getCardsInPlay() as $card) {
       if ($card->type == $this->type) {
         return null;
@@ -32,12 +43,15 @@ abstract class GreenCard extends AbstractCard
 
   final public function play($player, $args)
   {
-    if ($this->location === 'hand') {
+    if ($this->location === LOCATION_HAND) {
       Cards::equip($this->id, $player->getId(), LOCATION_INPLAY_INACTIVE);
       return;
     }
-    $this->play2();
+    $this->playEquipment($player, $args);
   }
 
-  abstract protected function play2(): void; // TODO rename need to be implemented in card itself
+  protected function playEquipment($player, $args): void
+  {
+    $this->cardPlay($player, $args);
+  }
 }

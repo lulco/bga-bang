@@ -183,7 +183,12 @@ class Player extends \BANG\Helpers\DB_Manager
    */
   public function getCardsInPlay()
   {
-    return Cards::getInPlay($this->id);
+    return Cards::getAllInPlay($this->id);
+  }
+
+  public function getCardsInPlayInactive()
+  {
+    return Cards::getInPlayInactive($this->id);
   }
 
   /**
@@ -193,6 +198,16 @@ class Player extends \BANG\Helpers\DB_Manager
   {
     return $this->getCardsInPlay()->filter(function ($card) {
       return $card->getColor() === BLUE;
+    });
+  }
+
+  /**
+   * @return Collection
+   */
+  public function getGreenCardsInPlay()
+  {
+    return Cards::getInPlay($this->id)->filter(function ($card) {
+      return $card->getColor() === GREEN;
     });
   }
 
@@ -762,8 +777,10 @@ class Player extends \BANG\Helpers\DB_Manager
    */
   public function getHandOptions()
   {
+    $cardsAvailableToPlay = $this->getHand()->merge($this->getGreenCardsInPlay());
+
     return [
-      'cards' => $this->addOptionsTo($this->getHand()),
+      'cards' => $this->addOptionsTo($cardsAvailableToPlay),
       'character' => null,
     ];
   }

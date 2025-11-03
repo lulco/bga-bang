@@ -29,9 +29,15 @@ abstract class AbstractCard implements JsonSerializable
   {
     if ($params !== null) {
       $this->id = (int) $params['id'];
-      if (array_key_exists('value', $params) && array_key_exists('color', $params)) {
+      if (array_key_exists('value', $params)) {
         $this->value = $params['value'];
+      }
+      if (array_key_exists('color', $params)) {
         $this->color = $params['color'];
+      }
+      if (array_key_exists('location', $params)) {
+        $locationParts = explode('_', $params['location']);
+        $this->location = $locationParts[0] ?? null;
       }
     }
   }
@@ -144,9 +150,9 @@ abstract class AbstractCard implements JsonSerializable
     return $this->effect['type'];
   }
 
-  public function isEquipment()
+  public function targetLocationAfterPlay(): string
   {
-    return false;
+    return LOCATION_DISCARD;
   }
 
   public function isAction()
