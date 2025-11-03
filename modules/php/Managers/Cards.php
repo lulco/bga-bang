@@ -154,7 +154,17 @@ class Cards extends Pieces
 
   public static function getInPlay($pId = null)
   {
-    return self::getInLocation([LOCATION_INPLAY, $pId ?? '%'])->merge(self::getInLocation([LOCATION_INPLAY_INACTIVE, $pId ?? '%']));
+    return self::getInLocation([LOCATION_INPLAY, $pId ?? '%']);
+  }
+
+  public static function getInPlayInactive($pId = null)
+  {
+    return self::getInLocation([LOCATION_INPLAY_INACTIVE, $pId ?? '%']);
+  }
+
+  public static function getAllInPlay($pId = null)
+  {
+    return self::getInPlay($pId)->merge(self::getInPlayInactive($pId));
   }
 
   public static function play($id)
