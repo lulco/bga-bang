@@ -51,7 +51,7 @@ abstract class GreenCard extends AbstractCard
     $this->playEquipment($player, $args);
   }
 
-  protected function playEquipment($player, $args): void
+  protected function playEquipment(Player $player, array $args): void
   {
     $this->cardPlay($player, $args);
   }

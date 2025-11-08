@@ -83,12 +83,14 @@ class Cards extends Pieces
     CARD_BARREL => 'Barrel',
     CARD_SCOPE => 'Scope',
     CARD_MUSTANG => 'Mustang',
-
     CARD_BINOCULAR => 'Binocular',
     CARD_HIDEOUT => 'Hideout',
     CARD_PUNCH => 'Punch',
     CARD_DODGE => 'Dodge',
-
+    CARD_PONY_EXPRESS => 'PonyExpress',
+    CARD_SOMBRERO => 'Sombrero',
+    CARD_IRON_PLATE => 'IronPlate',
+    CARD_TEN_GALLON_HAT => 'TenGallonHat',
     CARD_CANTEEN => 'Canteen',
   ];
 

@@ -16,6 +16,12 @@ trait CardPlayOptionsTrait
     $playOptions = [];
     switch ($this->effect['type']) {
       case BASIC_ATTACK:
+        if (in_array($this->effect['impacts'], [INRANGE, SPECIFIC_RANGE, ANY])) {
+          return [
+            'target_types' => [TARGET_PLAYER],
+            'targets' => $this->getTargetablePlayers($player),
+          ];
+        }
       case LIFE_POINT_MODIFIER:
         if (in_array($this->effect['impacts'], [NONE, ALL, ALL_OTHER])) {
           return ['target_types' => [TARGET_NONE]];
