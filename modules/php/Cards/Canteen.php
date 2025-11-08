@@ -16,7 +16,7 @@ class Canteen extends GreenCard
     $this->copies = [
       BASE_GAME => [],
       HIGH_NOON => [],
-      DODGE_CITY => ['7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H', '7H'],
+      DODGE_CITY => ['7H'],
     ];
     $this->effect = [
       'type' => LIFE_POINT_MODIFIER,
