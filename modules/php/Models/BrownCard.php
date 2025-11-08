@@ -8,7 +8,6 @@ namespace BANG\Models;
 abstract class BrownCard extends AbstractCard
 {
   use CardPlayTrait;
-
   use CardPlayOptionsTrait;
 
   protected $border = 'brown';
