@@ -157,6 +157,9 @@ define('CARD_SOMBRERO', 33);
 define('CARD_IRON_PLATE', 34);
 define('CARD_TEN_GALLON_HAT', 35);
 define('CARD_CANTEEN', 36);
+define('CARD_KNIFE', 37);
+define('CARD_PEPPERBOX', 38);
+define('CARD_BUFFALO_RIFLE', 39);
 
 // Event cards
 define('CARD_BLESSING', 100);

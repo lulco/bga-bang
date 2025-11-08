@@ -92,6 +92,9 @@ class Cards extends Pieces
     CARD_IRON_PLATE => 'IronPlate',
     CARD_TEN_GALLON_HAT => 'TenGallonHat',
     CARD_CANTEEN => 'Canteen',
+    CARD_KNIFE => 'Knife',
+    CARD_PEPPERBOX => 'Pepperbox',
+    CARD_BUFFALO_RIFLE => 'BuffaloRifle',
   ];
 
   /**
