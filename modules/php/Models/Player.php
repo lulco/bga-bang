@@ -183,7 +183,12 @@ class Player extends \BANG\Helpers\DB_Manager
    */
   public function getCardsInPlay()
   {
-    return Cards::getInPlay($this->id);
+    return Cards::getAllInPlay($this->id);
+  }
+
+  public function getCardsInPlayInactive()
+  {
+    return Cards::getInPlayInactive($this->id);
   }
 
   /**
@@ -193,6 +198,16 @@ class Player extends \BANG\Helpers\DB_Manager
   {
     return $this->getCardsInPlay()->filter(function ($card) {
       return $card->getColor() === BLUE;
+    });
+  }
+
+  /**
+   * @return Collection
+   */
+  public function getGreenCardsInPlay()
+  {
+    return Cards::getInPlay($this->id)->filter(function ($card) {
+      return $card->getColor() === GREEN;
     });
   }
 
@@ -673,14 +688,17 @@ class Player extends \BANG\Helpers\DB_Manager
   {
     $missedNeeded = Stack::top()['missedNeeded'] ?? 1;
 
-    // Defensive cards in hand
+    // Defensive cards in hand and active defensive green cards in play
     $res = $this->getHand()
-      ->filter(function ($card) {
-        return $card->getColor() == BROWN && $card->getEffectType() == DEFENSIVE;
-      })
-      ->map(function ($card) use ($missedNeeded) {
+      ->filter(function (AbstractCard $card) {
+        return $card->getColor() === BROWN && $card->getEffectType() === DEFENSIVE;
+      })->merge($this->getGreenCardsInPlay()->filter(function(AbstractCard $card) {
+        return !Rules::isIgnoreCardsInPlay() && $card->getEffectType() === DEFENSIVE;
+      }))
+      ->map(function (AbstractCard $card) use ($missedNeeded) {
         return [
           'id' => $card->getId(),
+          'type' => $card->getType(),
           'amount' => $missedNeeded,
           'options' => ['target_types' => [TARGET_NONE]],
         ];
@@ -694,6 +712,7 @@ class Player extends \BANG\Helpers\DB_Manager
     if (!is_null($card)) {
       $res[] = [
         'id' => $card->getId(),
+        'type' => $card->getType(),
         'amount' => 1,
         'options' => ['target_types' => [TARGET_NONE]],
       ];
@@ -762,8 +781,12 @@ class Player extends \BANG\Helpers\DB_Manager
    */
   public function getHandOptions()
   {
+    $cardsAvailableToPlay = $this->getHand()->merge($this->getGreenCardsInPlay()->filter(function (AbstractCard $card) {
+      return $card->getEffectType() !== DEFENSIVE;
+    }));
+
     return [
-      'cards' => $this->addOptionsTo($this->getHand()),
+      'cards' => $this->addOptionsTo($cardsAvailableToPlay),
       'character' => null,
     ];
   }
@@ -786,7 +809,7 @@ class Player extends \BANG\Helpers\DB_Manager
   {
     $mustPlayCardId = GameOptions::isEvents() && Globals::getIsMustPlayCard() ? Globals::getMustPlayCardId() : null;
     $cards = $cards
-      ->map(function ($card) use ($mustPlayCardId) {
+      ->map(function (AbstractCard $card) use ($mustPlayCardId) {
         return [
           'id' => $card->getId(),
           'options' => $card->getPlayOptions($this),

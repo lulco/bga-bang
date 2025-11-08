@@ -15,9 +15,9 @@ class BlueCard extends AbstractCard
     return BLUE;
   }
 
-  public function isEquipment()
+  public function targetLocationAfterPlay(): string
   {
-    return true;
+    return LOCATION_INPLAY;
   }
 
   public function getPlayOptions($player)

@@ -1,22 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Cards;
 
-use BANG\Models\BrownCard;
+use BANG\Models\GreenCard;
 
-class CatBalou extends BrownCard
+class CanCan extends GreenCard
 {
   public function __construct(?array $params = null)
   {
     parent::__construct($params);
-    $this->type = CARD_CAT_BALOU;
-    $this->name = clienttranslate('Cat Balou');
+    $this->type = CARD_CAN_CAN;
+    $this->name = clienttranslate('Can Can');
     $this->text = clienttranslate('Chosen player discards a card of your choice.');
     $this->symbols = [[SYMBOL_DISCARD, SYMBOL_ANY]];
     $this->copies = [
-      BASE_GAME => ['KH', '9D', '10D', 'JD'],
+      BASE_GAME => [],
       HIGH_NOON => [],
-      DODGE_CITY => ['8C'],
+      DODGE_CITY => ['JC'],
     ];
     $this->effect = [
       'type' => DISCARD,

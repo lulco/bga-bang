@@ -253,7 +253,8 @@ define([
 
           // Button for barrel
           args._private.cards.forEach((card) => {
-            if ($('bang-card-' + card.id).parentNode.id !== 'hand-cards' && showBarrel) {
+            const CARD_BARREL = 19;
+            if (card.type === CARD_BARREL && showBarrel) {
               this.addPrimaryActionButton('buttonUseBarrel', _('Use barrel'), () => this.onClickCardSelectReact(card));
             }
           });

@@ -1,16 +1,16 @@
 <?php
+
 namespace BANG\States;
+
 use BANG\Core\Notifications;
 use BANG\Managers\Players;
 use BANG\Managers\Cards;
 use BANG\Core\Stack;
 use BANG\Managers\Rules;
 use BANG\Managers\EventCards;
-use BANG\Models\AbstractCard;
 
 trait ReactTrait
 {
-
   public function stReact()
   {
     $player = Players::getActive();
@@ -50,9 +50,7 @@ trait ReactTrait
     $ctx = Stack::getCtx();
     $player = Players::getActive();
     if ($ctx['state'] === ST_REACT) {
-      $card = Cards::getCardByType($ctx['src']['type']);
-
-      /** @var AbstractCard $card */
+      $card = Cards::getCardByType($ctx['src']['type'], $ctx['src']);
       $ctx['_private']['active'] = $card->getReactionOptions($player);
       return $ctx;
     } else {

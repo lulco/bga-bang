@@ -56,6 +56,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         extraClass: '',
         colorOverride: this.gamedatas?.eventActive?.colorOverride || '',
         border: ocard.border,
+        status: ocard.location === 'inPlayInactive' ? 'inactive' : ''
       };
 
       if (this._cards[ocard.type]) {
@@ -80,7 +81,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         flipped: true,
         extraClass: '',
         colorOverride: '',
-        border: ''
+        border: '',
+        status: ''
       };
     },
 
@@ -98,9 +100,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       var card = this.getCard(ocard);
       card.uid = card.id + suffix;
       if ($('bang-card-' + card.uid)) dojo.destroy('bang-card-' + card.uid);
-
-      console.log(card);
-
       var div = dojo.place(this.format_block('jstpl_card', card), container);
       if (card.flipped === '' || card.enforceTooltip)
         this.addTooltipHtml(div.id, this.format_block('jstpl_cardTooltip', card));
@@ -231,8 +230,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     /*
- * notification sent to all players when someone plays a card
- */
+     * notification sent to all players when someone plays a card
+     */
     notif_cardPlayed(n) {
       debug('Notif: card played', n);
       var playerId = n.args.player_id,
@@ -240,11 +239,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           targetPlayer = n.args.player_id2 || null;
       var animationDuration = 1000;
 
-      if (!targetPlayer && target === 'inPlay') {
+      if (!targetPlayer && (target === 'inPlay' || target === 'inPlayInactive')) {
         targetPlayer = playerId;
         animationDuration = 700;
       }
-      if (targetPlayer && target !== 'inPlay') {
+      if (targetPlayer && target !== 'inPlay' && target !== 'inPlayInactive') {
         // Slide to player then to discard
         animationDuration = 1600;
       }
@@ -256,11 +255,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       card.extraClass += ' slide';
       var sourceId = this.getCardAndDestroy(n.args.card, 'player-character-' + playerId);
       if (targetPlayer) {
-        var duration = target === 'inPlay' ? animationDuration : animationDuration / 2;
-        var targetId = (target === 'inPlay' ? 'player-inplay-' : 'player-character-') + targetPlayer;
+        var duration = target === 'inPlay' || target === 'inPlayInactive' ? animationDuration : animationDuration / 2;
+        var targetId = (target === 'inPlay' || target === 'inPlayInactive' ? 'player-inplay-' : 'player-character-') + targetPlayer;
         this.slideTemporary('jstpl_card', card, 'board', sourceId, targetId, duration, 0).then(() => {
           // Add the card in front of player
           if (target === 'inPlay') this.addCard(n.args.card, targetId);
+          // Add the card in front of player but inactive
+          else if (target === 'inPlayInactive') this.addCard(n.args.card, targetId); // TODO add inactive class
           // Put the card in the discard pile
           else this.slideTemporaryToDiscard(n.args.card, targetId, animationDuration / 2, 'discard');
         });
