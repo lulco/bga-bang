@@ -162,8 +162,8 @@ define('CARD_PEPPERBOX', 38);
 define('CARD_BUFFALO_RIFLE', 39);
 define('CARD_CONESTOGA', 40);
 define('CARD_CAN_CAN', 41);
-
 define('CARD_BIBLE', 42);
+define('CARD_DERRINGER', 43);
 
 // Event cards
 define('CARD_BLESSING', 100);
