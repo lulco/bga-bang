@@ -153,6 +153,8 @@ define('CARD_RAG_TIME', 29);
 define('CARD_BINOCULAR', 30);
 define('CARD_HIDEOUT', 31);
 
+define('CARD_DERRINGER', 43);
+
 // Event cards
 define('CARD_BLESSING', 100);
 define('CARD_HANGOVER', 101);
