@@ -3,9 +3,12 @@
 namespace BANG\Cards;
 
 use BANG\Models\BangActionCard;
+use BANG\Models\BrownCard;
 
-class Gatling extends BangActionCard
+class Gatling extends BrownCard
 {
+  use BangActionCard;
+
   public function __construct(?array $params = null)
   {
     parent::__construct($params);
