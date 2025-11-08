@@ -1,11 +1,14 @@
 <?php
+
 namespace BANG\Cards;
 
-use BANG\Managers\Rules;
 use BANG\Models\BangActionCard;
+use BANG\Models\BrownCard;
 
-class Punch extends BangActionCard
+class Punch extends BrownCard
 {
+  use BangActionCard;
+
   public function __construct($params = null)
   {
     parent::__construct($params);

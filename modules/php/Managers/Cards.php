@@ -157,6 +157,16 @@ class Cards extends Pieces
     return self::getInLocation([LOCATION_INPLAY, $pId ?? '%']);
   }
 
+  public static function getInPlayInactive($pId = null)
+  {
+    return self::getInLocation([LOCATION_INPLAY_INACTIVE, $pId ?? '%']);
+  }
+
+  public static function getAllInPlay($pId = null)
+  {
+    return self::getInPlay($pId)->merge(self::getInPlayInactive($pId));
+  }
+
   public static function play($id)
   {
     self::insertOnTop($id, LOCATION_DISCARD);
@@ -175,9 +185,9 @@ class Cards extends Pieces
     }
   }
 
-  public static function equip($cardId, $pId)
+  public static function equip($cardId, $pId, $location = LOCATION_INPLAY)
   {
-    self::move($cardId, LOCATION_INPLAY, $pId);
+    self::move($cardId, $location, $pId);
   }
 
   public static function stole($mixed, $player)
