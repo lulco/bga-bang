@@ -6,6 +6,7 @@ use BANG\Core\Notifications;
 use BANG\Managers\Cards;
 use BANG\Managers\Players;
 use BANG\Managers\Rules;
+use BANG\Models\AbstractCard;
 use BANG\Models\BlueCard;
 
 class Dynamite extends BlueCard
@@ -48,8 +49,17 @@ class Dynamite extends BlueCard
       $player->discardCard($this, true); // Discard Dynamite itself
       $player->loseLife(3);
     } else {
-      // TODO : move to next player WITHOUT a dynamite (not needed for base game)
-      $next = Players::getNext($player);
+      $next = $player;
+      do {
+        $next = Players::getNext($next);
+        $hasDynamite = (bool)$next->getBlueCardsInPlay()->filter(function(AbstractCard $card) {
+          return $card->getType() === CARD_DYNAMITE;
+        })->count();
+      } while ($next->getId() !== $player->getId() && $hasDynamite);
+
+      if ($next->getId() === $player->getId()) {
+        return;
+      }
       Cards::equip($this->id, $next->getId());
       Notifications::moveCard($this, $player, $next);
     }
