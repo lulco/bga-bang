@@ -144,7 +144,7 @@ define('CARD_MUSTANG', 21);
 
 define('CARD_PUNCH', 22);
 define('CARD_SPRINGFIELD', 23);
-define('CARD_CANNON', 24);
+define('CARD_HOWITZER', 24);
 define('CARD_DODGE', 25);
 define('CARD_WHISKY', 26);
 define('CARD_TEQUILA', 27);
@@ -152,6 +152,16 @@ define('CARD_BRAWL', 28);
 define('CARD_RAG_TIME', 29);
 define('CARD_BINOCULAR', 30);
 define('CARD_HIDEOUT', 31);
+define('CARD_PONY_EXPRESS', 32);
+define('CARD_SOMBRERO', 33);
+define('CARD_IRON_PLATE', 34);
+define('CARD_TEN_GALLON_HAT', 35);
+define('CARD_CANTEEN', 36);
+define('CARD_KNIFE', 37);
+define('CARD_PEPPERBOX', 38);
+define('CARD_BUFFALO_RIFLE', 39);
+define('CARD_CONESTOGA', 40);
+define('CARD_CAN_CAN', 41);
 
 define('CARD_BIBLE', 42);
 
