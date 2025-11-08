@@ -1,14 +1,16 @@
 <?php
+
 namespace BANG\Models;
 
 use BANG\Core\Stack;
 
-/*
- * BangActionCard: class to handle cards which have BANG! symbol thus considered BANG! actions
+/**
+ * BangActionCard: trait to handle cards which have BANG! symbol thus considered BANG! actions
+ * @mixin AbstractCard
  */
-class BangActionCard extends BrownCard
+trait BangActionCard
 {
-  public function react($card, $player)
+  public function react(AbstractCard $card, Player $player)
   {
     if ($card->getType() != CARD_BARREL) {
       // Barrel knows how to handle this

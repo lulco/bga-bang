@@ -1,12 +1,17 @@
 <?php
+
 namespace BANG\Managers;
-use BANG\Helpers\Utils;
+
 use BANG\Core\Notifications;
+use BANG\Helpers\Pieces;
+use BANG\Helpers\Utils;
+use BANG\Models\AbstractCard;
+use BgaVisibleSystemException;
 
 /*
  * Cards: all utility functions concerning cards are here
  */
-class Cards extends \BANG\Helpers\Pieces
+class Cards extends Pieces
 {
   protected static $table = 'card';
   protected static $prefix = 'card_';
@@ -55,7 +60,7 @@ class Cards extends \BANG\Helpers\Pieces
   /*
    * cardClasses : for each card Id, the corresponding class name
    */
-  public static $classes = [
+  public static array $classes = [
     CARD_SCHOFIELD => 'Schofield',
     CARD_VOLCANIC => 'Volcanic',
     CARD_REMINGTON => 'Remington',
@@ -78,21 +83,36 @@ class Cards extends \BANG\Helpers\Pieces
     CARD_BARREL => 'Barrel',
     CARD_SCOPE => 'Scope',
     CARD_MUSTANG => 'Mustang',
-
     CARD_BINOCULAR => 'Binocular',
     CARD_HIDEOUT => 'Hideout',
     CARD_PUNCH => 'Punch',
     CARD_DODGE => 'Dodge',
+    CARD_PONY_EXPRESS => 'PonyExpress',
+    CARD_SOMBRERO => 'Sombrero',
+    CARD_IRON_PLATE => 'IronPlate',
+    CARD_TEN_GALLON_HAT => 'TenGallonHat',
+    CARD_CANTEEN => 'Canteen',
+    CARD_KNIFE => 'Knife',
+    CARD_PEPPERBOX => 'Pepperbox',
+    CARD_BUFFALO_RIFLE => 'BuffaloRifle',
+    CARD_HOWITZER => 'Howitzer',
+    CARD_CONESTOGA => 'Conestoga',
+    CARD_CAN_CAN => 'CanCan',
+    CARD_BIBLE => 'Bible',
+    CARD_DERRINGER => 'Derringer',
     CARD_WHISKY => 'Whisky',
   ];
 
-  /*
+  /**
    * getCardByType: factory function to create a card given its type
+   * @param int $cardType one of existing card types
+   * @param array|null $data data for specific copy of the card
+   * @throws BgaVisibleSystemException
    */
-  public static function getCardByType($cardType, $data = null)
+  public static function getCardByType(int $cardType, ?array $data = null): AbstractCard
   {
     if (!isset(self::$classes[$cardType])) {
-      throw new \BgaVisibleSystemException("getCardByType: Unknown card $cardType");
+      throw new BgaVisibleSystemException("getCardByType: Unknown card $cardType");
     }
     $name = 'BANG\Cards\\' . self::$classes[$cardType];
     return new $name($data);
@@ -150,6 +170,16 @@ class Cards extends \BANG\Helpers\Pieces
     return self::getInLocation([LOCATION_INPLAY, $pId ?? '%']);
   }
 
+  public static function getInPlayInactive($pId = null)
+  {
+    return self::getInLocation([LOCATION_INPLAY_INACTIVE, $pId ?? '%']);
+  }
+
+  public static function getAllInPlay($pId = null)
+  {
+    return self::getInPlay($pId)->merge(self::getInPlayInactive($pId));
+  }
+
   public static function play($id)
   {
     self::insertOnTop($id, LOCATION_DISCARD);
@@ -168,9 +198,9 @@ class Cards extends \BANG\Helpers\Pieces
     }
   }
 
-  public static function equip($cardId, $pId)
+  public static function equip($cardId, $pId, $location = LOCATION_INPLAY)
   {
-    self::move($cardId, LOCATION_INPLAY, $pId);
+    self::move($cardId, $location, $pId);
   }
 
   public static function stole($mixed, $player)

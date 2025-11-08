@@ -73,12 +73,6 @@ parameters:
       path: modules/php/Models/AbstractCard.php
 
     -
-      message: '#^Call to an undefined static method BANG\\Managers\\Players\:\:getPlayer\(\)\.$#'
-      identifier: staticMethod.notFound
-      count: 1
-      path: modules/php/Models/BrownCard.php
-
-    -
       message: '#^Call to an undefined method BANG\\Models\\Player\:\:useAbility\(\)\.$#'
       identifier: method.notFound
       count: 1
