@@ -17,7 +17,7 @@ class Pepperbox extends GreenCard
     $this->type = CARD_PEPPERBOX;
     $this->name = clienttranslate('Pepperbox');
     $this->text = clienttranslate('Pepperbox is like Bang! to any player in range.'); // TODO official description
-    $this->symbols = [[SYMBOL_BANG, SYMBOL_RANGE1]];
+    $this->symbols = [[SYMBOL_BANG, SYMBOL_INRANGE]];
     $this->copies = [
       BASE_GAME => [],
       HIGH_NOON => [],

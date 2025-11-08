@@ -17,7 +17,7 @@ class BuffaloRifle extends GreenCard
     $this->type = CARD_BUFFALO_RIFLE;
     $this->name = clienttranslate('Buffalo Rifle');
     $this->text = clienttranslate('Buffalo Rifle is like Bang! to any player.'); // TODO official description
-    $this->symbols = [[SYMBOL_BANG, SYMBOL_RANGE1]];
+    $this->symbols = [[SYMBOL_BANG, SYMBOL_ANY]];
     $this->copies = [
       BASE_GAME => [],
       HIGH_NOON => [],
