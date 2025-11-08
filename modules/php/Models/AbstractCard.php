@@ -222,11 +222,14 @@ abstract class AbstractCard implements JsonSerializable
   /**
    * react: default function to handle reaction using a card
    */
-  public function react($card, $player)
+  public function react(AbstractCard $card, Player $player)
   {
     if (($this->effect['type'] ?? null) == BASIC_ATTACK) {
       if ($card->getColor() == BROWN) {
         $card->playCard($player);
+        Notifications::cardPlayed($player, $card);
+      } elseif ($card instanceof GreenCard) {
+        $card->play($player, []);
         Notifications::cardPlayed($player, $card);
       } else {
         // E.g. reacting to Bang! using a barrel

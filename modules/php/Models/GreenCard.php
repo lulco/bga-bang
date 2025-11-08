@@ -11,6 +11,7 @@ use BANG\Managers\Rules;
 abstract class GreenCard extends AbstractCard
 {
   use CardPlayTrait;
+  use CardPlayOptionsTrait;
 
   protected $border = 'green';
 
@@ -30,11 +31,11 @@ abstract class GreenCard extends AbstractCard
   public function getPlayOptions($player)
   {
     if ($this->location === LOCATION_INPLAY) {
-      return ['target_types' => [TARGET_NONE]];
+      return $this->getCardPlayOptions($player);
     }
 
     foreach ($player->getCardsInPlay() as $card) {
-      if ($card->type == $this->type) {
+      if ($card->type === $this->type) {
         return null;
       }
     }
@@ -50,7 +51,7 @@ abstract class GreenCard extends AbstractCard
     $this->playEquipment($player, $args);
   }
 
-  protected function playEquipment($player, $args): void
+  protected function playEquipment(Player $player, array $args): void
   {
     $this->cardPlay($player, $args);
   }
