@@ -6,9 +6,9 @@ use BANG\Models\BrownCard;
 
 class Dodge extends BrownCard
 {
-  public function __construct($id = null, $copy = '')
+  public function __construct(?array $params = null)
   {
-    parent::__construct($id, $copy);
+    parent::__construct($params);
     $this->type = CARD_DODGE;
     $this->name = clienttranslate('Dodge');
     $this->text = clienttranslate('Discard to avoid an attack and draw one card'); // TODO official description
