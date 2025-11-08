@@ -44,29 +44,6 @@ $characters = [
   JOURDONNAIS => ['name' => totranslate('Jourdonnais'), 'tmdisplay' => totranslate('Jourdonnais')],
   WILLY_THE_KID => ['name' => totranslate('Willy the Kid'), 'tmdisplay' => totranslate('Willy the Kid')],
   LUCKY_DUKE => ['name' => totranslate('Lucky Duke'), 'tmdisplay' => totranslate('Lucky Duke')],
-
-  PIXIE_PETE => ['name' => totranslate('Pixie Pete'), 'tmdisplay' => totranslate('Pixie Pete')],
-    /**
-     * TODO ask BGA for something like this to implement - conditional options in dropdown
-     */
-    /*
-    , 'displaycondition' => [
-      [
-          'type' => 'otheroption',
-          'id' => OPTION_DODGE_CITY,
-          'value' => [1]
-      ]
-  ]],
-    */
-  BILL_NOFACE => ['name' => totranslate('Bill Noface'), 'tmdisplay' => totranslate('Bill Noface')],
-  HERB_HUNTER => ['name' => totranslate('Herb Hunter'), 'tmdisplay' => totranslate('Herb Hunter')],
-  GREG_DIGGER => ['name' => totranslate('Greg Digger'), 'tmdisplay' => totranslate('Greg Digger')],
-  TEQUILA_JOE => ['name' => totranslate('Tequila Joe'), 'tmdisplay' => totranslate('Tequila Joe')],
-  SEAN_MALLORY => ['name' => totranslate('Sean Mallory'), 'tmdisplay' => totranslate('Sean Mallory')],
-  CHUCK_WENGAM => ['name' => totranslate('Chuck Wengam'), 'tmdisplay' => totranslate('Chuck Wengam')],
-  JOSE_DELGADO => ['name' => totranslate('Jose Delgado'), 'tmdisplay' => totranslate('Jose Delgado')],
-  APACHE_KID => ['name' => totranslate('Apache Kid'), 'tmdisplay' => totranslate('Apache Kid')],
-  PAT_BRENNAN => ['name' => totranslate('Pat Brennan'), 'tmdisplay' => totranslate('Pat Brennan')],
 ];
 
 $game_options = [
@@ -184,15 +161,6 @@ $game_options = [
         'value' => [OPTION_HIGH_NOON_AND_FOC, OPTION_HIGH_NOON_OR_FOC]
       ]
     ]
-  ],
-
-  OPTION_DODGE_CITY => [
-    'name' => totranslate('Dodge city'),
-    'default' => 0,
-    'values' => [
-        0 => ['name' => totranslate('Off')],
-        1 => ['name' => totranslate('On')],
-    ],
   ],
 
   OPTION_CHAR_1 => [
