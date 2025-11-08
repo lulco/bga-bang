@@ -88,6 +88,8 @@ class Cards extends Pieces
     CARD_HIDEOUT => 'Hideout',
     CARD_PUNCH => 'Punch',
     CARD_DODGE => 'Dodge',
+
+    CARD_HOWITZER => 'Howitzer',
   ];
 
   /**

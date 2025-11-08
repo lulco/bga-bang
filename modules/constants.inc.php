@@ -144,7 +144,7 @@ define('CARD_MUSTANG', 21);
 
 define('CARD_PUNCH', 22);
 define('CARD_SPRINGFIELD', 23);
-define('CARD_CANNON', 24);
+define('CARD_HOWITZER', 24);
 define('CARD_DODGE', 25);
 define('CARD_WHISKY', 26);
 define('CARD_TEQUILA', 27);
