@@ -21,7 +21,7 @@ class Howitzer extends GreenCard
     $this->copies = [
       BASE_GAME => [],
       HIGH_NOON => [],
-      DODGE_CITY => ['9S', '9S', '9S', '9S', '9S', '9S', '9S', '9S', '9S', '9S'],
+      DODGE_CITY => ['9S'],
     ];
     $this->effect = [
       'type' => BASIC_ATTACK,
