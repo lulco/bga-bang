@@ -156,6 +156,7 @@ define('CARD_PONY_EXPRESS', 32);
 define('CARD_SOMBRERO', 33);
 define('CARD_IRON_PLATE', 34);
 define('CARD_TEN_GALLON_HAT', 35);
+define('CARD_CANTEEN', 36);
 
 // Event cards
 define('CARD_BLESSING', 100);

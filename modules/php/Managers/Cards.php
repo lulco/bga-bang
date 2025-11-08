@@ -91,6 +91,7 @@ class Cards extends Pieces
     CARD_SOMBRERO => 'Sombrero',
     CARD_IRON_PLATE => 'IronPlate',
     CARD_TEN_GALLON_HAT => 'TenGallonHat',
+    CARD_CANTEEN => 'Canteen',
   ];
 
   /**
