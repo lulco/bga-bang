@@ -160,7 +160,6 @@ define('CARD_CANTEEN', 36);
 define('CARD_KNIFE', 37);
 define('CARD_PEPPERBOX', 38);
 define('CARD_BUFFALO_RIFLE', 39);
-
 define('CARD_CONESTOGA', 40);
 define('CARD_CAN_CAN', 41);
 
