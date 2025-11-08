@@ -98,6 +98,7 @@ class Cards extends Pieces
     CARD_HOWITZER => 'Howitzer',
     CARD_CONESTOGA => 'Conestoga',
     CARD_CAN_CAN => 'CanCan',
+    CARD_BIBLE => 'Bible',
   ];
 
   /**
