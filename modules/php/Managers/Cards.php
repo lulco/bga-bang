@@ -95,6 +95,7 @@ class Cards extends Pieces
     CARD_KNIFE => 'Knife',
     CARD_PEPPERBOX => 'Pepperbox',
     CARD_BUFFALO_RIFLE => 'BuffaloRifle',
+    CARD_HOWITZER => 'Howitzer',
   ];
 
   /**
