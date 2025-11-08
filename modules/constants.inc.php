@@ -152,6 +152,14 @@ define('CARD_BRAWL', 28);
 define('CARD_RAG_TIME', 29);
 define('CARD_BINOCULAR', 30);
 define('CARD_HIDEOUT', 31);
+define('CARD_PONY_EXPRESS', 32);
+define('CARD_SOMBRERO', 33);
+define('CARD_IRON_PLATE', 34);
+define('CARD_TEN_GALLON_HAT', 35);
+define('CARD_CANTEEN', 36);
+define('CARD_KNIFE', 37);
+define('CARD_PEPPERBOX', 38);
+define('CARD_BUFFALO_RIFLE', 39);
 
 // Event cards
 define('CARD_BLESSING', 100);
