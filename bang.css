@@ -697,6 +697,74 @@ div.bang-character-tooltip div.bang-character-tooltip-sizing .player-character-p
 .player-info[data-character="15"] .player-character-background {
   background-position: 100% center;
 }
+
+/**
+ * tmp character images while we don't have official in sprite
+ */
+.player-info[data-character="16"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/molly_stark.png");
+  background-position: 100% center;
+}
+.player-info[data-character="17"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/apache_kid.png");
+  background-position: 100% center;
+}
+.player-info[data-character="18"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/elena_fuente.png");
+  background-position: 100% center;
+}
+.player-info[data-character="19"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/tequila_joe.png");
+  background-position: 100% center;
+}
+.player-info[data-character="20"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/vera_custer.png");
+  background-position: 100% center;
+}
+.player-info[data-character="21"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/bill_noface.png");
+  background-position: 100% center;
+}
+.player-info[data-character="22"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/herb_hunter.png");
+  background-position: 100% center;
+}
+.player-info[data-character="23"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/pixie_pete.png");
+  background-position: 100% center;
+}
+.player-info[data-character="24"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/sean_mallory.png");
+  background-position: 100% center;
+}
+.player-info[data-character="25"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/pat_brennan.png");
+  background-position: 100% center;
+}
+.player-info[data-character="26"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/jose_delgado.png");
+  background-position: 100% center;
+}
+.player-info[data-character="27"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/chuck_wengam.png");
+  background-position: 100% center;
+}
+.player-info[data-character="28"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/belle_star.png");
+  background-position: 100% center;
+}
+.player-info[data-character="29"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/doc_holyday.png");
+  background-position: 100% center;
+}
+.player-info[data-character="30"] .player-character-background {
+  background-image: url("img/dodge_tmp/characters/greg_digger.png");
+  background-position: 100% center;
+}
+/**
+ * end tmp character images
+ */
+
 .player-info.empty {
   display: flex;
 }
@@ -1554,57 +1622,29 @@ div.bang-card .card-back {
   border-radius: 10px;
   z-index: 2;
 }
-div.bang-card[data-type="5"] .card-front {
+
+/**
+ * use data-border instead of data-type for bg
+ */
+div.bang-card[data-border="brown"] .card-front {
   background-position: 20% center;
 }
-div.bang-card[data-type="6"] .card-front {
-  background-position: 20% center;
-}
-div.bang-card[data-type="7"] .card-front {
-  background-position: 20% center;
-}
-div.bang-card[data-type="8"] .card-front {
-  background-position: 20% center;
-}
-div.bang-card[data-type="9"] .card-front {
-  background-position: 20% center;
-}
-div.bang-card[data-type="10"] .card-front {
-  background-position: 20% center;
-}
-div.bang-card[data-type="11"] .card-front {
-  background-position: 20% center;
-}
-div.bang-card[data-type="12"] .card-front {
-  background-position: 20% center;
-}
-div.bang-card[data-type="13"] .card-front {
-  background-position: 20% center;
-}
-div.bang-card[data-type="14"] .card-front {
-  background-position: 20% center;
-}
-div.bang-card[data-type="15"] .card-front {
-  background-position: 20% center;
-}
-div.bang-card[data-type="16"] .card-front {
-  background-position: 20% center;
-}
-div.bang-card[data-type="17"] .card-front {
+div.bang-card[data-border="blue"] .card-front {
   background-position: 40% center;
 }
-div.bang-card[data-type="18"] .card-front {
-  background-position: 40% center;
+/**
+ * tmp use green border out of sprite
+ */
+div.bang-card[data-border="green"] .card-front {
+  background-image: url("img/dodge_tmp/cards/green_border.png");
 }
-div.bang-card[data-type="19"] .card-front {
-  background-position: 40% center;
-}
-div.bang-card[data-type="20"] .card-front {
-  background-position: 40% center;
-}
-div.bang-card[data-type="21"] .card-front {
-  background-position: 40% center;
-}
+/**
+ * end tmp
+ */
+
+/**
+ * weapon has special bg image
+ */
 div.bang-card[data-type="0"] .card-front {
   background-position: 60% center;
 }
@@ -1620,6 +1660,7 @@ div.bang-card[data-type="3"] .card-front {
 div.bang-card[data-type="4"] .card-front {
   background-position: 60% center;
 }
+
 div.bang-card[data-type="100"] .card-front {
   background-position: 80% center;
 }
@@ -1939,6 +1980,126 @@ div.bang-card .card-front .card-background {
   background-image: url("img/card_backgrounds.jpg");
   background-size: 600% 1000%;
 }
+
+/**
+ * tmp bg images while there are som official in sprite
+ */
+div.bang-card[data-type="22"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/punch.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="23"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/springfield.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="24"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/howitzer.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="25"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/dodge.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="26"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/whisky.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="27"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/tequila.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="28"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/brawl.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="29"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/rag_time.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="30"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/binocular.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="31"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/hideout.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="32"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/pony_express.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="33"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/sombrero.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="34"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/iron_plate.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="35"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/ten_gallon_hat.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="36"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/canteen.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="37"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/knife.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="38"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/pepperbox.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="39"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/buffalo_rifle.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="40"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/conestoga.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="41"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/can_can.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="42"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/bible.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+div.bang-card[data-type="43"] .card-front .card-background {
+  background-image: url("img/dodge_tmp/cards/derringer.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+/**
+ * end tmp bg images
+ */
+
+
+
 div.bang-card .card-front .card-copy {
   position: absolute;
   bottom: -3px;
