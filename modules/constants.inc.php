@@ -289,6 +289,7 @@ define('SYMBOL_RANGE5', 12);
 define('SYMBOL_BOOK', 13);
 define('SYMBOL_DRAW_HEART', 14);
 define('SYMBOL_DYNAMITE', 15);
+define('SYMBOL_ADDITIONAL_CARD', 16);
 
 /*
  * Constants for locations
