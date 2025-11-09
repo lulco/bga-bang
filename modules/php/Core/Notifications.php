@@ -71,7 +71,7 @@ class Notifications
       'msgYou' => clienttranslate('${You} play ${card_name}'),
       'player' => $player,
       'card' => $card,
-      'target' => $card->targetLocationAfterPlay(),
+      'target' => $args['targetLocation'] ?? $card->targetLocationAfterPlay(),
     ];
 
     if (isset($args['player'])) {

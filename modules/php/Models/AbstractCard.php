@@ -2,6 +2,7 @@
 
 namespace BANG\Models;
 
+use BANG\Cards\Barrel;
 use BANG\Core\Stack;
 use BANG\Managers\Cards;
 use BANG\Core\Notifications;
@@ -98,6 +99,11 @@ abstract class AbstractCard implements JsonSerializable
   public function getType()
   {
     return $this->type;
+  }
+
+  public function getLocation()
+  {
+    return $this->location;
   }
 
   public function getName()
@@ -225,12 +231,14 @@ abstract class AbstractCard implements JsonSerializable
   public function react(AbstractCard $card, Player $player)
   {
     if (($this->effect['type'] ?? null) == BASIC_ATTACK) {
-      if ($card->getColor() == BROWN) {
+      if ($card instanceof Barrel && $card->getLocation() === LOCATION_INPLAY) {
+        $card->activate($player);
+      } elseif ($card->getColor() === BROWN || $player->getCharacter() === ELENA_FUENTE) { // I don't like this character check here
         $card->playCard($player);
-        Notifications::cardPlayed($player, $card);
+        Notifications::cardPlayed($player, $card, ['targetLocation' => LOCATION_DISCARD]);
       } elseif ($card instanceof GreenCard) {
         $card->play($player, []);
-        Notifications::cardPlayed($player, $card);
+        Notifications::cardPlayed($player, $card, ['targetLocation' => LOCATION_DISCARD]);
       } else {
         // E.g. reacting to Bang! using a barrel
         $card->activate($player);

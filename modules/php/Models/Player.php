@@ -699,6 +699,7 @@ class Player extends \BANG\Helpers\DB_Manager
         return [
           'id' => $card->getId(),
           'type' => $card->getType(),
+          'location' => $card->getLocation(),
           'amount' => $missedNeeded,
           'options' => ['target_types' => [TARGET_NONE]],
         ];
@@ -713,6 +714,7 @@ class Player extends \BANG\Helpers\DB_Manager
       $res[] = [
         'id' => $card->getId(),
         'type' => $card->getType(),
+        'location' => $card->getLocation(),
         'amount' => 1,
         'options' => ['target_types' => [TARGET_NONE]],
       ];
