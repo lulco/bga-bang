@@ -41,7 +41,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             TARGET_PLAYER = 2,
             TARGET_ALL_CARDS = 3;
         if (card.options.target_types.includes(TARGET_NONE)) {
-          this._selectedCardSecond = card;
           this.onSelectOption();
         }
         if (card.options.target_types.includes(TARGET_PLAYER)) {
