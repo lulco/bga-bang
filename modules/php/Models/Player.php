@@ -815,6 +815,7 @@ class Player extends \BANG\Helpers\DB_Manager
         return [
           'id' => $card->getId(),
           'options' => $card->getPlayOptions($this),
+          'location' => $card->getLocation(),
           'type' => $card->getType(),
           'mustPlay' => $card->getId() === $mustPlayCardId,
         ];
