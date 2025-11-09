@@ -254,7 +254,7 @@ define([
           // Button for barrel
           args._private.cards.forEach((card) => {
             const CARD_BARREL = 19;
-            if (card.type === CARD_BARREL && showBarrel) {
+            if (card.type === CARD_BARREL && card.location === 'inPlay' && showBarrel) {
               this.addPrimaryActionButton('buttonUseBarrel', _('Use barrel'), () => this.onClickCardSelectReact(card));
             }
           });
