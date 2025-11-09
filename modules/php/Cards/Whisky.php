@@ -18,7 +18,7 @@ class Whisky extends BrownCard
     $this->type = CARD_WHISKY;
     $this->name = clienttranslate('Whisky');
     $this->text = clienttranslate('Regain two life points.');
-    $this->symbols = [[SYMBOL_LIFEPOINT]];
+    $this->symbols = [[SYMBOL_ADDITIONAL_CARD, SYMBOL_LIFEPOINT, SYMBOL_LIFEPOINT]];
     $this->copies = [
       BASE_GAME => [],
       HIGH_NOON => [],
