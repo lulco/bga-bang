@@ -6,9 +6,9 @@ use BANG\Models\BlueCard;
 
 class Hideout extends BlueCard
 {
-  public function __construct($id = null)
+  public function __construct(?array $params = null)
   {
-    parent::__construct($id);
+    parent::__construct($params);
     $this->type = CARD_HIDEOUT;
     $this->name = clienttranslate('Hideout');
     $this->text = clienttranslate('Others view you at distance +1');

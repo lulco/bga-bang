@@ -21,6 +21,9 @@
  *
  */
 
+/**
+ * @property bang $game
+ */
 class action_bang extends APP_GameAction
 {
   // Constructor: please do not modify
@@ -43,11 +46,13 @@ class action_bang extends APP_GameAction
     $optionType = self::getArg('optionType', AT_alphanum, false);
     $optionArg = self::getArg('optionArg', AT_posint, false);
     $secondCardId = self::getArg('secondCardId', AT_posint, false);
+    $additionalCardId = self::getArg('additionalCardId', AT_posint, false);
     $args = [
       'type' => $optionType,
       'player' => $player,
       'arg' => $optionArg,
       'secondCardId' => $secondCardId,
+      'additionalCardId' => $additionalCardId,
     ];
     $this->game->actPlayCard($id, $args);
     self::ajaxResponse();
@@ -68,9 +73,13 @@ class action_bang extends APP_GameAction
     self::ajaxResponse();
   }
 
-  public function actCancelPreselection()
+  /**
+   * is this method even called?
+   */
+  public function actCancelPreselection(): void
   {
     self::setAjaxMode();
+    // method actCancelPreSelection probably doesn't exist
     $this->game->actCancelPreSelection();
     self::ajaxResponse();
   }

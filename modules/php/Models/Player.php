@@ -699,6 +699,7 @@ class Player extends \BANG\Helpers\DB_Manager
         return [
           'id' => $card->getId(),
           'type' => $card->getType(),
+          'location' => $card->getLocation(),
           'amount' => $missedNeeded,
           'options' => ['target_types' => [TARGET_NONE]],
         ];
@@ -713,6 +714,7 @@ class Player extends \BANG\Helpers\DB_Manager
       $res[] = [
         'id' => $card->getId(),
         'type' => $card->getType(),
+        'location' => $card->getLocation(),
         'amount' => 1,
         'options' => ['target_types' => [TARGET_NONE]],
       ];
@@ -813,6 +815,7 @@ class Player extends \BANG\Helpers\DB_Manager
         return [
           'id' => $card->getId(),
           'options' => $card->getPlayOptions($this),
+          'location' => $card->getLocation(),
           'type' => $card->getType(),
           'mustPlay' => $card->getId() === $mustPlayCardId,
         ];
@@ -1158,10 +1161,8 @@ class Player extends \BANG\Helpers\DB_Manager
 
   /**
    * We use this method when isCardPlayable() returned that this card is not playable, so we need a reason
-   * @param AbstractCard $lastCard
-   * @return string
    */
-  public function getNonPlayabilityReason($lastCardType)
+  public function getNonPlayabilityReason(int $lastCardType): string
   {
     switch ($lastCardType) {
       case CARD_MISSED:

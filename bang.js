@@ -79,6 +79,8 @@ define([
         this._dial = {};
         this._isToSelectSecondCard = false;
         this._selectedCardSecond = null;
+        this._isToSelectAdditionalCard = false;
+        this._selectedAdditionalCard = null;
 
         // States that need the player to be active to be entered
         this._activeStates = [
@@ -254,7 +256,7 @@ define([
           // Button for barrel
           args._private.cards.forEach((card) => {
             const CARD_BARREL = 19;
-            if (card.type === CARD_BARREL && showBarrel) {
+            if (card.type === CARD_BARREL && card.location === 'inPlay' && showBarrel) {
               this.addPrimaryActionButton('buttonUseBarrel', _('Use barrel'), () => this.onClickCardSelectReact(card));
             }
           });
@@ -447,6 +449,8 @@ define([
         this._isSelectableDiscard = false;
         this._isToSelectSecondCard = false;
         this._selectedCardSecond = null;
+        this._isToSelectAdditionalCard = false;
+        this._selectedAdditionalCard = null;
         dojo.query('.bang-card').removeClass('unselectable selectable selected');
         dojo.query('.bang-player .player-info').removeClass('selectable');
         dojo.removeClass('deck', 'selectable');
