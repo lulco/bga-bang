@@ -11,7 +11,7 @@ use BgaVisibleSystemException;
 
 /**
  * @mixin AbstractCard
-*/
+ */
 trait CardPlayTrait
 {
   /**
