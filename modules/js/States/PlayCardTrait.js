@@ -29,6 +29,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         this._selectedCard = card;
       }
 
+      this._selectablePlayers = [];
+      // What kind of target ?
+      let TARGET_NONE = 0,
+        TARGET_CARD = 1,
+        TARGET_PLAYER = 2,
+        TARGET_ALL_CARDS = 3;
+
       if (!!card.options.with_another_card?.strict && !this._isToSelectSecondCard) {
         this.makeCardsSelectable(card.options.with_another_card.cards);
         this.doSomeCleanupAndAddUndo(_('You must choose a second card to play with'));
@@ -38,17 +45,16 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         this.doSomeCleanupAndAddUndo(_('You must choose an additional card to play with'));
         this._isToSelectAdditionalCard = true;
       } else if (this._isToSelectAdditionalCard) {
-        this.makePlayersSelectable(this._selectedCard.options.targets);
         this._selectableCards = [];
         this._isToSelectAdditionalCard = false;
         this._selectedAdditionalCard = card;
+
+        if (this._selectedCard.options.target_types.includes(TARGET_NONE)) {
+          this.onSelectOption();
+        } else {
+          this.makePlayersSelectable(this._selectedCard.options.targets);
+        }
       } else {
-        this._selectablePlayers = [];
-        // What kind of target ?
-        let TARGET_NONE = 0,
-            TARGET_CARD = 1,
-            TARGET_PLAYER = 2,
-            TARGET_ALL_CARDS = 3;
         if (card.options.target_types.includes(TARGET_NONE)) {
           this.onSelectOption();
         }
