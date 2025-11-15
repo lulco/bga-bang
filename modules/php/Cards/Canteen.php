@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BANG\Cards;
 
 use BANG\Models\GreenCard;
+use BANG\Models\Player;
 
 class Canteen extends GreenCard
 {
@@ -27,7 +28,7 @@ class Canteen extends GreenCard
     ];
   }
 
-  public function getPlayOptions($player)
+  public function getPlayOptions(Player $player): ?array
   {
     $options = parent::getPlayOptions($player);
     if ($options !== null && $player->getBullets() == $player->getHp()) {

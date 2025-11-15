@@ -11,7 +11,7 @@ class BuffaloRifle extends GreenCard
 {
   use BangActionCard;
 
-  public function __construct($params = null)
+  public function __construct(?array $params = null)
   {
     parent::__construct($params);
     $this->type = CARD_BUFFALO_RIFLE;

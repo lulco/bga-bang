@@ -34,7 +34,6 @@ class Bang extends BrownCard
 
   /**
    * Only one bang per turn, unless unlimitedBangs granted by Volcanic or by character
-   * @param Player $player
    */
   public function getPlayOptions(Player $player): ?array
   {
