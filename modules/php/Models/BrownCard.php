@@ -2,6 +2,8 @@
 
 namespace BANG\Models;
 
+use BgaVisibleSystemException;
+
 /*
  * BrownCard: class to handle brown card
  */
@@ -22,20 +24,18 @@ abstract class BrownCard extends AbstractCard
     return true;
   }
 
-  /**
+  /*
    * getPlayOptions
    */
-  public function getPlayOptions($player)
+  public function getPlayOptions(Player $player): ?array
   {
     return $this->getCardPlayOptions($player);
   }
 
   /**
-   * @param Player $player
-   * @param array $args
-   * @return void
+   * @throws BgaVisibleSystemException
    */
-  public function play($player, $args)
+  public function play(Player $player, array $args): void
   {
     $this->cardPlay($player, $args);
   }
