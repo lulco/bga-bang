@@ -28,7 +28,7 @@ abstract class GreenCard extends AbstractCard
     return LOCATION_DISCARD;
   }
 
-  public function getPlayOptions($player)
+  public function getPlayOptions(Player $player): ?array
   {
     if ($this->location === LOCATION_INPLAY) {
       return $this->getCardPlayOptions($player);
@@ -42,7 +42,7 @@ abstract class GreenCard extends AbstractCard
     return Rules::isCanPlayBlueGreenCards() ? ['target_types' => [TARGET_NONE]] : null;
   }
 
-  final public function play($player, $args)
+  public function play(Player $player, array $args): void
   {
     if ($this->location === LOCATION_HAND) {
       Cards::equip($this->id, $player->getId(), LOCATION_INPLAY_INACTIVE);

@@ -6,9 +6,9 @@ use BANG\Models\BlueCard;
 
 class Binocular extends BlueCard
 {
-  public function __construct($id = null)
+  public function __construct(?array $params = null)
   {
-    parent::__construct($id);
+    parent::__construct($params);
     $this->type = CARD_BINOCULAR;
     $this->name = clienttranslate('Binocular');
     $this->text = clienttranslate('You view others at distance -1');

@@ -51,8 +51,9 @@ trait CardPlayOptionsTrait
   /**
    * getTargetablePlayers: return the player's id that can be targeted by this card, depending on effect and range
    * @param Player $player
+   * @return int[] the player's id that can be targeted by this card, depending on effect and range
    */
-  public function getTargetablePlayers($player)
+  public function getTargetablePlayers(Player $player): array
   {
     $playerIds = [];
     switch ($this->effect['impacts']) {
