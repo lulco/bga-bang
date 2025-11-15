@@ -42,9 +42,9 @@ trait PlayCardTrait
     if (!in_array($cardId, $cardIds)) {
       throw new \BgaVisibleSystemException('You cannot play this card!');
     }
-//    if ($args['secondCardId'] && !Rules::isBangCouldBePlayedWithAnotherBang()) {
-//      throw new \BgaVisibleSystemException('Two cards have been selected but Sniper is not active, please report a bug');
-//    }
+    if ($args['secondCardId'] && !Rules::isBangCouldBePlayedWithAnotherBang()) {
+      throw new \BgaVisibleSystemException('Two cards have been selected but Sniper is not active, please report a bug');
+    }
 
     $card = Cards::get($cardId);
     $player = Players::getActive();
