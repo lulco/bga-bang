@@ -78,7 +78,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           this.makePlayersCardsSelectable(otherPlayerIds, true, this._selectedCard.options.status_bar_message);
         }
         // end of copy of else branch
-
       } else {
         if (card.options.target_types.includes(TARGET_NONE)) {
           this.onSelectOption();
