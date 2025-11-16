@@ -49,11 +49,35 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         this._isToSelectAdditionalCard = false;
         this._selectedAdditionalCard = card;
 
+        // This is copy from else branch but this._selectedCard is used instead of card
         if (this._selectedCard.options.target_types.includes(TARGET_NONE)) {
           this.onSelectOption();
-        } else {
-          this.makePlayersSelectable(this._selectedCard.options.targets);
         }
+        if (this._selectedCard.options.target_types.includes(TARGET_PLAYER)) {
+          if (this._isToSelectSecondCard) {
+            this.makePlayersSelectable(this._selectedCard.options.with_another_card?.targets ?? this._selectedCard.options.targets);
+            this._selectableCards = [];
+            this._isToSelectSecondCard = false;
+            this._selectedCardSecond = this._selectedCard;
+          } else {
+            this.makePlayersSelectable(this._selectedCard.options.targets);
+            if (this._selectedCard.options.with_another_card) {
+              this.makeCardsSelectable(this._selectedCard.options.with_another_card.cards);
+              this._isToSelectSecondCard = true;
+            } else if (!this._selectedCard.options.target_types.includes(TARGET_ALL_CARDS)) {
+              this._selectableCards = [];
+            }
+          }
+        }
+        if (this._selectedCard.options.target_types.includes(TARGET_CARD)) {
+          this.makePlayersCardsSelectable(this._selectedCard.options.targets, false, this._selectedCard.options.status_bar_message);
+        }
+        if (this._selectedCard.options.target_types.includes(TARGET_ALL_CARDS)) {
+          const playerIds = Object.keys(this.gamedatas.players).map(Number);
+          const otherPlayerIds = playerIds.filter((id) => id !== this.player_id);
+          this.makePlayersCardsSelectable(otherPlayerIds, true, this._selectedCard.options.status_bar_message);
+        }
+        // end of copy of else branch
       } else {
         if (card.options.target_types.includes(TARGET_NONE)) {
           this.onSelectOption();
