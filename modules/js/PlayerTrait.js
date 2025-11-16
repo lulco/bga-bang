@@ -331,6 +331,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         const CARD_JAIL = 17;
         const CARD_PANIC = 11;
         const CARD_CAT_BALOU = 12;
+        const CARD_RAG_TIME = 29;
         if (this._selectedCard && this._selectedCard.type === CARD_JAIL && playerId === this.player_id) {
           this.confirmationDialog(_('Are you sure you want to put yourself to Jail?'), () => {
             this.onSelectOption();
@@ -340,7 +341,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             this.onSelectOption();
           });
         } else if (this._selectedCard && this._selectedCard.type === CARD_CAT_BALOU && playerId === this.player_id) {
-          this.confirmationDialog(_('Are you sure you want to use Cat balou against yourself?'), () => {
+          this.confirmationDialog(_('Are you sure you want to use Cat Balou against yourself?'), () => {
+            this.onSelectOption();
+          });
+        } else if (this._selectedCard && this._selectedCard.type === CARD_RAG_TIME && playerId === this.player_id) {
+          this.confirmationDialog(_('Are you sure you want to use Rag Time against yourself?'), () => {
             this.onSelectOption();
           });
         } else {
@@ -403,12 +408,17 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       const CARD_PANIC = 11;
       const CARD_CAT_BALOU = 12;
+      const CARD_RAG_TIME = 29;
       if (this._selectedCard && this._selectedCard.type === CARD_PANIC && this._selectedPlayer === this.player_id) {
         this.confirmationDialog(_('Are you sure you want to use Panic! against your card?'), () => {
           this.onSelectOption();
         });
       } else if (this._selectedCard && this._selectedCard.type === CARD_CAT_BALOU && this._selectedPlayer === this.player_id) {
-        this.confirmationDialog(_('Are you sure you want to use Cat balou against your card?'), () => {
+        this.confirmationDialog(_('Are you sure you want to use Cat Balou against your card?'), () => {
+          this.onSelectOption();
+        });
+      } else if (this._selectedCard && this._selectedCard.type === CARD_RAG_TIME && this._selectedPlayer === this.player_id) {
+        this.confirmationDialog(_('Are you sure you want to use Rag Time against your card?'), () => {
           this.onSelectOption();
         });
       } else {

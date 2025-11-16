@@ -24,6 +24,16 @@ trait CardPlayTrait
     // Played card always go to the discard
     $this->discard();
 
+    if (isset($this->effect['additional_card'])) {
+      if (!isset($args['additionalCardId'])) {
+        // TODO some error message?
+        return;
+      }
+      // discard additional card
+      $additionalCard = Cards::get($args['additionalCardId']);
+      $player->discardCard($additionalCard);
+    }
+
     switch ($effect['type']) {
       case BASIC_ATTACK:
         $ids = $effect['impacts'] == ALL_OTHER ? $player->getOrderedOtherPlayers() : [$args['player']];

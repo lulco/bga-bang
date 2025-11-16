@@ -14,20 +14,28 @@ trait CardPlayOptionsTrait
   private function getCardPlayOptions(Player $player): ?array
   {
     $playOptions = [];
+    if (isset($this->effect['additional_card'])) {
+      $playOptions['with_additional_card'] = [
+        'cards' => $player->getHand()->filter(function (AbstractCard $card) {
+          return $card->getId() !== $this->getId();
+        })->toArray(),
+      ];
+    }
+
     switch ($this->effect['type']) {
       case BASIC_ATTACK:
         if (in_array($this->effect['impacts'], [INRANGE, SPECIFIC_RANGE, ANY])) {
-          return [
-            'target_types' => [TARGET_PLAYER],
-            'targets' => $this->getTargetablePlayers($player),
-          ];
-        }
-      case LIFE_POINT_MODIFIER:
-        if (in_array($this->effect['impacts'], [NONE, ALL, ALL_OTHER])) {
-          return ['target_types' => [TARGET_NONE]];
+          $playOptions['target_types'] = [TARGET_PLAYER];
+          $playOptions['targets'] = $this->getTargetablePlayers($player);
+        } else {
+          $playOptions['target_types'] = [TARGET_NONE];
         }
         break;
-
+      case LIFE_POINT_MODIFIER:
+        if (in_array($this->effect['impacts'], [NONE, ALL, ALL_OTHER])) {
+          $playOptions['target_types'] = [TARGET_NONE];
+        }
+        break;
       case DRAW:
       case DISCARD:
         $playOptions['targets'] = $this->getTargetablePlayers($player);
@@ -42,7 +50,8 @@ trait CardPlayOptionsTrait
       case DEFENSIVE:
         return null;
       default:
-        return ['target_types' => [TARGET_NONE]];
+        $playOptions['target_types'] = [TARGET_NONE];
+        break;
     }
 
     return $playOptions;
