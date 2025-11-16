@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace BANG\Cards;
 
-use BANG\Managers\Cards;
-use BANG\Models\AbstractCard;
 use BANG\Models\BrownCard;
-use BANG\Models\Player;
 
 class Whisky extends BrownCard
 {
@@ -27,29 +24,7 @@ class Whisky extends BrownCard
       'type' => LIFE_POINT_MODIFIER,
       'amount' => 2,
       'impacts' => NONE,
+      'additional_card' => 1,
     ];
-  }
-
-  public function play(Player $player, array $args): void
-  {
-    if (!isset($args['additionalCardId'])) {
-      return;
-    }
-
-    $additionalCard = Cards::get($args['additionalCardId']);
-    $player->discardCard($additionalCard);
-
-    parent::play($player, $args);
-  }
-
-  public function getPlayOptions(Player $player): ?array
-  {
-    $options = parent::getPlayOptions($player);
-    $options['with_additional_card'] = [
-      'cards' => $player->getHand()->filter(function (AbstractCard $card) {
-          return $card->getId() !== $this->getId();
-      })->toArray(),
-    ];
-    return $options;
   }
 }
