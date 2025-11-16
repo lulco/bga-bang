@@ -34,6 +34,9 @@ trait CardPlayOptionsTrait
       case LIFE_POINT_MODIFIER:
         if (in_array($this->effect['impacts'], [NONE, ALL, ALL_OTHER])) {
           $playOptions['target_types'] = [TARGET_NONE];
+        } elseif ($this->effect['impacts'] == ANY) {
+          $playOptions['target_types'] = [TARGET_PLAYER];
+          $playOptions['targets'] = $this->getTargetablePlayers($player);
         }
         break;
       case DRAW:
@@ -46,7 +49,6 @@ trait CardPlayOptionsTrait
           $playOptions['status_bar_message'] = clienttranslate('You must choose a card in play or a player\'s hand');
         }
         break;
-
       case DEFENSIVE:
         return null;
       default:
