@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Bang\Tests\CardsGetPlayOptions;
 
 use BANG\Cards\Canteen;
 use BANG\Characters\PaulRegret;
 use BANG\Managers\EventCards;
-use PHPUnit\Framework\TestCase;
 
 final class CanteenGetPlayOptionsTest // extends TestCase
 {

@@ -6,6 +6,7 @@ namespace Bang\Tests\Mocks;
 
 use BANG\Helpers\Collection;
 use BANG\Managers\Cards;
+use BANG\Models\AbstractCard;
 use BANG\Models\Player;
 use BgaVisibleSystemException;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -32,37 +33,51 @@ trait PlayerMockerAndFaker
     return array_merge($this->playerData, $override);
   }
 
-  protected function createPlayerMock(array $row, array $handCards = [], array $cardsInPlay = []): Player
+  /**
+   * @param array $playerData
+   * @param AbstractCard[] $handCards
+   * @param AbstractCard[] $cardsInPlay
+   * @return Player
+   */
+  protected function createPlayerMock(array $playerData, array $handCards = [], array $cardsInPlay = []): Player
   {
-    return new class($row, $handCards, $cardsInPlay) extends Player
+    return new class($playerData, $handCards, $cardsInPlay) extends Player
     {
       private array $handCards;
 
       private array $cardsInPlay;
 
-      public function __construct(array $row, array $handCards, array $cardsInPlay)
+      /**
+       * @param array $playerData
+       * @param AbstractCard[] $handCards
+       * @param AbstractCard[] $cardsInPlay
+       */
+      public function __construct(array $playerData, array $handCards, array $cardsInPlay)
       {
-        parent::__construct($row);
+        parent::__construct($playerData);
         $this->handCards = $handCards;
         $this->cardsInPlay = $cardsInPlay;
       }
 
-      public function getHand()
+      public function getHand(): Collection
       {
         return new Collection($this->handCards);
       }
 
-      public function getCardsInPlay()
+      public function getCardsInPlay(): Collection
       {
         return new Collection($this->cardsInPlay);
       }
     };
   }
 
-  protected function createPlayerMockWithNoCardsInPlay(int $character): Player
+  protected function createPlayerMockWithNoCardsInPlay(int $character, int $hp = 4, int $bullets = 4): Player
   {
-      $player = $this->createPlayerMock($this->getPlayerData(['player_character' => $character, 'player_hp' => 4, 'player_bullets' => 4]));
-      return $player;
+      return $this->createPlayerMock($this->getPlayerData([
+        'player_character' => $character,
+        'player_hp' => $hp,
+        'player_bullets' => $bullets
+      ]));
   }
 
   /**
@@ -75,7 +90,6 @@ trait PlayerMockerAndFaker
     foreach ($cardTypes as $cardType) {
       $cards[] = Cards::getCardByType($cardType);
     }
-    $player = $this->createPlayerMock($this->getPlayerData(['player_character' => $character, 'player_hp' => 4, 'player_bullets' => 4]), [], $cards);
-    return $player;
+    return $this->createPlayerMock($this->getPlayerData(['player_character' => $character, 'player_hp' => 4, 'player_bullets' => 4]), [], $cards);
   }
 }
