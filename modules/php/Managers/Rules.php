@@ -2,6 +2,7 @@
 
 namespace BANG\Managers;
 
+use BANG\Characters\BelleStar;
 use BANG\Core\Stack;
 use BANG\Helpers\DB_Manager;
 use BANG\Models\AbstractCard;
@@ -253,11 +254,12 @@ class Rules extends DB_Manager
     ];
   }
 
-  /**
-   * @param int | null $exceptId
-   * @return boolean
-   */
-  public static function isIgnoreCardsInPlay($exceptId = null) {
+  public static function isIgnoreCardsInPlay(?Player $player = null): bool
+  {
+    if ($player instanceof BelleStar) {
+      return true;
+    }
+
     // $exceptId would be used for Belle Star later
     $eventCard = EventCards::getActive();
     return $eventCard && $eventCard->isIgnoreCardsInPlay();
