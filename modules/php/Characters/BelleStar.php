@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Characters;
 
-class BelleStar extends \BANG\Models\Player
+use BANG\Models\Player;
+
+class BelleStar extends Player
 {
   public function __construct($row = null)
   {

@@ -546,6 +546,7 @@ class Player extends \BANG\Helpers\DB_Manager
   /**
    * returns the current distance to an enemy from the view of the enemy
    * should not be called on the player checking for targets but on the other players
+   * @param Player $enemy
    * @return int
    */
   public function getDistanceTo($enemy)
@@ -559,7 +560,7 @@ class Player extends \BANG\Helpers\DB_Manager
       $d = abs($pos2 - $pos1);
       $dist = min($d, count($positions) - $d);
     }
-    if (!Rules::isIgnoreCardsInPlay()) {
+    if (!Rules::isIgnoreCardsInPlay($enemy)) {
       foreach ($enemy->getCardsInPlay() as $card) {
         if (($card->getEffect()['type'] ?? null) == RANGE_DECREASE) {
           $dist--;
@@ -585,6 +586,10 @@ class Player extends \BANG\Helpers\DB_Manager
   public function getDistances()
   {
     $dist = [];
+    /**
+     * @var int $pId
+     * @var Player $player2
+     */
     foreach (Players::getLivingPlayers() as $pId => $player2) {
       $dist[$pId] = $player2->getDistanceTo($this);
     }
@@ -686,14 +691,18 @@ class Player extends \BANG\Helpers\DB_Manager
    */
   public function getDefensiveOptions()
   {
-    $missedNeeded = Stack::top()['missedNeeded'] ?? 1;
+    $stackTop = Stack::top();
+    $missedNeeded = $stackTop['missedNeeded'] ?? 1;
+    $attackerId = $stackTop['attacker'] ?? null;
+
+    $attacker = $attackerId ? Players::get($attackerId) : null;
 
     // Defensive cards in hand and active defensive green cards in play
     $res = $this->getHand()
       ->filter(function (AbstractCard $card) {
         return $card->getColor() === BROWN && $card->getEffectType() === DEFENSIVE;
-      })->merge($this->getGreenCardsInPlay()->filter(function(AbstractCard $card) {
-        return !Rules::isIgnoreCardsInPlay() && $card->getEffectType() === DEFENSIVE;
+      })->merge($this->getGreenCardsInPlay()->filter(function(AbstractCard $card) use ($attacker) {
+        return !Rules::isIgnoreCardsInPlay($attacker) && $card->getEffectType() === DEFENSIVE;
       }))
       ->map(function (AbstractCard $card) use ($missedNeeded) {
         return [
@@ -707,8 +716,8 @@ class Player extends \BANG\Helpers\DB_Manager
       ->toArray();
 
     // Defensive cards in play
-    $card = $this->getCardsInPlay()->reduce(function ($barrel, $card) {
-      return $card->getType() === CARD_BARREL && !$card->wasPlayed() && !Rules::isIgnoreCardsInPlay() ? $card : $barrel;
+    $card = $this->getCardsInPlay()->reduce(function ($barrel, $card) use ($attacker) {
+      return $card->getType() === CARD_BARREL && !$card->wasPlayed() && !Rules::isIgnoreCardsInPlay($attacker) ? $card : $barrel;
     }, null);
     if (!is_null($card)) {
       $res[] = [
