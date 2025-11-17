@@ -19,7 +19,7 @@ class Rules extends DB_Manager
   /** @var bool use for tests only together with $testActiveCard */
   protected static bool $isTest = false;
 
-  /** @var array{string, bool} used for tests only */
+  /** @var array<string, bool> used for tests only */
   protected static array $availableRules = [];
 
   public static function setAvailableRulesForTest(array $availableRules): void
