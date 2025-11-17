@@ -76,7 +76,7 @@ abstract class AbstractCard implements JsonSerializable
   /*
    * jsonSerialize: used in frontend to manipulate cards
    */
-  public function jsonSerialize()
+  public function jsonSerialize(): array
   {
     return [
       'id' => $this->id,
