@@ -12,7 +12,7 @@ use BANG\Models\Player;
 
 class ElenaFuente extends Player
 {
-  public function __construct($row = null)
+  public function __construct(?array $row = null)
   {
     $this->character = ELENA_FUENTE;
     $this->character_name = clienttranslate('Elena Fuente');
@@ -22,7 +22,7 @@ class ElenaFuente extends Player
     parent::__construct($row);
   }
 
-  public function getDefensiveOptions()
+  public function getDefensiveOptions(): array
   {
     $defensiveOptions = parent::getDefensiveOptions();
     if (Rules::isAbilityAvailable()) {

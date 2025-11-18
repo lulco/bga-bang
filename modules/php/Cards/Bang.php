@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Cards;
 
 use BANG\Managers\Players;
@@ -71,11 +73,7 @@ class Bang extends BrownCard
     return $playOptions;
   }
 
-  /**
-   * @param Player $player
-   * @return array
-   */
-  private function getBangsWithoutThisCard($player)
+  private function getBangsWithoutThisCard(Player $player): array
   {
     $bangOptions = [ 'targets' => Players::getLivingPlayers($player->getId())->getIds() ];
     return array_values(array_filter($player->getBangCards($bangOptions)['cards'], function ($card) {
