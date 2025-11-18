@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Characters;
 
-class VeraCuster extends \BANG\Models\Player
+use BANG\Models\Player;
+
+class VeraCuster extends Player
 {
-  public function __construct($row = null)
+  public function __construct(?array $row = null)
   {
     $this->character = VERA_CUSTER;
     $this->character_name = clienttranslate('Vera Custer');

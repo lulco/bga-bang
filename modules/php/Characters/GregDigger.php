@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Characters;
 
 use BANG\Managers\Rules;
+use BANG\Models\Player;
 
-class GregDigger extends \BANG\Models\Player
+class GregDigger extends Player
 {
-  public function __construct($row = null)
+  public function __construct(?array $row = null)
   {
     $this->character = GREG_DIGGER;
     $this->character_name = clienttranslate('Greg Digger');
@@ -16,7 +19,7 @@ class GregDigger extends \BANG\Models\Player
     parent::__construct($row);
   }
 
-  public function onPlayerEliminated($player)
+  public function onPlayerEliminated(Player $player): void
   {
     if (!Rules::isAbilityAvailable()) {
       return;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Characters;
 
 use BANG\Core\Notifications;
@@ -9,7 +11,7 @@ use BANG\Models\Player;
 
 class JoseDelgado extends Player
 {
-  public function __construct($row = null)
+  public function __construct(?array $row = null)
   {
     $this->character = JOSE_DELGADO;
     $this->character_name = clienttranslate('José Delgado');
@@ -20,30 +22,27 @@ class JoseDelgado extends Player
     parent::__construct($row);
   }
 
-  public function getHandOptions($lastCardOnly = false)
+  public function getHandOptions(): array
   {
     return $this->addAbility(parent::getHandOptions());
   }
 
-  private function addAbility($t)
+  private function addAbility(array $options): array
   {
     if (!Rules::isAbilityAvailable() || $this->abilityUsedCount >= $this->abilityUsageLimit) {
-      return $t;
+      return $options;
     }
 
     $blueCards = $this->getHand()->filter(function ($card) {
       return $card->getColor() === BLUE;
     });
     if ($blueCards->count() > 0) {
-      $t['character'] = JOSE_DELGADO;
+      $options['character'] = JOSE_DELGADO;
     }
-    return $t;
+    return $options;
   }
 
-  /**
-   * @return void
-   */
-  public function useAbility($args)
+  public function useAbility(array $args): void
   {
     if (!Rules::isAbilityAvailable() || $this->abilityUsedCount >= $this->abilityUsageLimit) {
       return;

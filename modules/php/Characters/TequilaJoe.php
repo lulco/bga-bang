@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Characters;
 
 use BANG\Cards\Beer;
 use BANG\Managers\Rules;
+use BANG\Models\AbstractCard;
 use BANG\Models\Player;
 
 class TequilaJoe extends Player
 {
-  public function __construct($row = null)
+  public function __construct(?array $row = null)
   {
     $this->character = TEQUILA_JOE;
     $this->character_name = clienttranslate('Tequila Joe');
@@ -18,7 +21,7 @@ class TequilaJoe extends Player
     parent::__construct($row);
   }
 
-  public function modifyCardEffect($card)
+  public function modifyCardEffect(AbstractCard $card): array
   {
     if (!Rules::isAbilityAvailable()) {
       return parent::modifyCardEffect($card);

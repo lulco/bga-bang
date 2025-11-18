@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Characters;
 
-class ApacheKid extends \BANG\Models\Player
+use BANG\Models\Player;
+
+class ApacheKid extends Player
 {
-  public function __construct($row = null)
+  public function __construct(?array $row = null)
   {
     $this->character = APACHE_KID;
     $this->character_name = clienttranslate('Apache Kid');

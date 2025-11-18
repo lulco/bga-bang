@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Characters;
 
-class BillNoface extends \BANG\Models\Player{
-  public function __construct($row = null)
+use BANG\Models\Player;
+
+class BillNoface extends Player
+{
+  public function __construct(?array $row = null)
   {
     $this->character = BILL_NOFACE;
     $this->character_name = clienttranslate('Bill Noface');
@@ -13,7 +18,7 @@ class BillNoface extends \BANG\Models\Player{
     parent::__construct($row);
   }
 
-  public function defaultCardsToDraw()
+  public function defaultCardsToDraw(): int
   {
     return $this->bullets - $this->hp + 1;
   }
