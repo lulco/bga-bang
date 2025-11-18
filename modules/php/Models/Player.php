@@ -187,7 +187,7 @@ class Player extends DB_Manager
     return Cards::getAllInPlay($this->id);
   }
 
-  public function getCardsInPlayInactive()
+  public function getCardsInPlayInactive(): Collection
   {
     return Cards::getInPlayInactive($this->id);
   }
