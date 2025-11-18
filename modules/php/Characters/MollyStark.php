@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Characters;
 
-class MollyStark extends \BANG\Models\Player
+use BANG\Models\Player;
+
+class MollyStark extends Player
 {
   public function __construct($row = null)
   {
@@ -17,5 +21,13 @@ Indians!), she draws one card from the deck.'),
     $this->bullets = 4;
     $this->expansion = DODGE_CITY;
     parent::__construct($row);
+  }
+
+  public function react($ids)
+  {
+    parent::react($ids);
+    if (!is_null($ids)) {
+      $this->drawCards(count($ids));
+    }
   }
 }
