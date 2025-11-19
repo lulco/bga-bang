@@ -48,17 +48,11 @@ class Player extends DB_Manager
   protected ?int $livingStatus = null;
   protected ?bool $agreedToDisclaimer = null;
 
-  /**
-   * limit for ability usage per turn, 0 means unlimited
-   * @var int
-   */
-  protected $abilityUsageLimit = 0;
+  /** limit for ability usage per turn, 0 means unlimited */
+  protected int $abilityUsageLimit = 0;
 
-  /**
-   * counter for ability usage
-   * @var int
-   */
-  protected $abilityUsedCount;
+  /** counter for ability usage */
+  protected int $abilityUsedCount = 0;
 
   public function __construct(?array $row = null)
   {
