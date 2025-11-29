@@ -321,17 +321,24 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     onClickPlayer(playerId) {
       if (!this._selectablePlayers.includes(playerId)) return;
 
-      if (this._action == 'drawCard') {
+      const CARD_JAIL = 17;
+      const CARD_PANIC = 11;
+      const CARD_CAT_BALOU = 12;
+      const CARD_RAG_TIME = 29;
+
+      const DOC_HOLYDAY = 29;
+
+      if (this._action === 'useAbility' && this._useAbilityOption === DOC_HOLYDAY) {
+        this._selectedPlayer = playerId;
+        this.onClickConfirmUseAbility();
+      } else if (this._action === 'drawCard') {
         this.onClickDraw(playerId);
-      } else if (this._action == 'bloodBrothers') {
+      } else if (this._action === 'bloodBrothers') {
         this.onClickPlayerBloodBrothers(playerId)
       } else {
         this._selectedOptionType = 'player';
         this._selectedPlayer = playerId;
-        const CARD_JAIL = 17;
-        const CARD_PANIC = 11;
-        const CARD_CAT_BALOU = 12;
-        const CARD_RAG_TIME = 29;
+
         if (this._selectedCard && this._selectedCard.type === CARD_JAIL && playerId === this.player_id) {
           this.confirmationDialog(_('Are you sure you want to put yourself to Jail?'), () => {
             this.onSelectOption();
