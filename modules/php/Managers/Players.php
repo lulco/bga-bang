@@ -77,7 +77,7 @@ class Players extends DB_Manager
     $playersCount = count($players);
 
     // Compute roles and shuffle them
-    $roles = array_slice([SHERIFF, RENEGADE, OUTLAW, OUTLAW, DEPUTY, OUTLAW, DEPUTY], 0, $playersCount);
+    $roles = array_slice([SHERIFF, RENEGADE, OUTLAW, OUTLAW, DEPUTY, OUTLAW, DEPUTY, RENEGADE], 0, $playersCount);
     shuffle($roles);
 
     // Handle forced characters
@@ -401,7 +401,7 @@ class Players extends DB_Manager
     return self::get(self::getNextId($player, $includeGhosts));
   }
 
-  public static function getPreviousId(Player $player, bool $includeGhosts = false): Player
+  public static function getPreviousId(Player $player, bool $includeGhosts = false): int
   {
     $players = self::getLivingPlayerIdsStartingWith($player, $includeGhosts);
     return $players[count($players)-1];

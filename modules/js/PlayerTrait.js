@@ -279,7 +279,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         destroyCallback: this.removeDialog.bind(this),
       });
 
-      [0, 2, 2, 3, 1, 2, 1].forEach((roleId, i) => {
+      [0, 3, 2, 2, 1, 2, 1, 3].forEach((roleId, i) => {
         if (i >= Object.keys(this.gamedatas.players).length) return;
 
         if ($('dialog-role-count-' + roleId)) {
