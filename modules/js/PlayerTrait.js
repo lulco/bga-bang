@@ -321,8 +321,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     onClickPlayer(playerId) {
       if (!this._selectablePlayers.includes(playerId)) return;
 
-      console.log(this._useAbilityOption);
-
       const CARD_JAIL = 17;
       const CARD_PANIC = 11;
       const CARD_CAT_BALOU = 12;
@@ -330,12 +328,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       const DOC_HOLYDAY = 29;
 
-      if (this._useAbilityOption === DOC_HOLYDAY) {
+      if (this._action === 'useAbility' && this._useAbilityOption === DOC_HOLYDAY) {
         this._selectedPlayer = playerId;
         this.onClickConfirmUseAbility();
-      } else if (this._action == 'drawCard') {
+      } else if (this._action === 'drawCard') {
         this.onClickDraw(playerId);
-      } else if (this._action == 'bloodBrothers') {
+      } else if (this._action === 'bloodBrothers') {
         this.onClickPlayerBloodBrothers(playerId)
       } else {
         this._selectedOptionType = 'player';

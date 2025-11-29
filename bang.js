@@ -221,7 +221,6 @@ define([
         }
 
         if (stateName === 'playCard') {
-          console.log(args);
           if (args._private && args._private.character != null && this._selectedCard == null) {
             this.makeCharacterAbilityUsable(args._private.character, args._private.targets);
           }
@@ -365,12 +364,8 @@ define([
       onClickCardUseAbility: function (card) {
         this.toggleCard(card);
 
-        console.log(card);
-
         const buttonVisible = $('buttonConfirmUseAbility');
         if (this._selectedCards.length === this._amount && this._selectTargetPlayer) {
-          console.log(this._abilityTargets);
-
           this.makePlayersSelectable(this._abilityTargets);
         } else {
           if (this._selectedCards.length < this._amount) {
@@ -391,8 +386,6 @@ define([
       },
 
       onClickConfirmUseAbility: function () {
-        console.log(this._selectedCards.join(';'));
-        console.log(this._selectedPlayer);
         this.takeAction('actUseAbility', {
           cards: this._selectedCards.join(';'),
           players: this._selectedPlayer
