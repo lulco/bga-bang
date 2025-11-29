@@ -49,14 +49,15 @@ class JoseDelgado extends Player
     }
 
     // TODO check card if it is blue
+    $cards = $args['cards'];
 
     Notifications::tell(
       clienttranslate('${player_name} uses the ability of Jose Delgado by discarding 1 blue card to draw 2 cards'),
       ['player_name' => $this->name]
     );
 
-    Cards::discardMany($args);
-    Notifications::discardedCards($this, $args);
+    Cards::discardMany($cards);
+    Notifications::discardedCards($this, $cards);
     $this->drawCards(2);
     $this->incrementAbilityUsage();
   }

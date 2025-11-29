@@ -221,8 +221,9 @@ define([
         }
 
         if (stateName === 'playCard') {
-          if (args._private && args._private.character != null && this._selectedCard == null)
-            this.makeCharacterAbilityUsable(args._private.character);
+          if (args._private && args._private.character != null && this._selectedCard == null) {
+            this.makeCharacterAbilityUsable(args._private.character, args._private.targets);
+          }
 
           this.addActionButton('buttonEndTurn', _('End of turn'), 'onClickEndOfTurn', null, false, 'blue');
         }
@@ -294,8 +295,9 @@ define([
       /******************
        *** Use ability ***
        ******************/
-      makeCharacterAbilityUsable(option) {
+      makeCharacterAbilityUsable(option, targets) {
         this._useAbilityOption = option;
+        this._abilityTargets = targets;
         this.addActionButton('buttonUseAbility', _('Use ability'), () => this.onClickUseAbility(), null, false, 'blue');
       },
 
@@ -303,7 +305,8 @@ define([
         let SID_KETCHUM = 9,
             JOURDONNAIS = 13,
             CHUCK_WENGAM = 27,
-            JOSE_DELGADO = 26
+            JOSE_DELGADO = 26,
+            DOC_HOLYDAY = 29
         ;
         this._selectedCards = [];
         if (this._useAbilityOption === JOURDONNAIS || this._useAbilityOption === CHUCK_WENGAM) {
@@ -339,6 +342,22 @@ define([
 
           this.removeActionButtons();
           this.addActionButton('buttonCancelUseAbility', _('Cancel'), () => this.restartState(), null, false, 'gray');
+        } else if (this._useAbilityOption === DOC_HOLYDAY) {
+          var cards = dojo.query('#hand .bang-card').map((card) => {
+            return { id: parseInt(dojo.attr(card, 'data-id')) };
+          });
+
+          this._amount = 2;
+          this._selectTargetPlayer = true;
+          this.makeCardSelectable(cards, 'useAbility');
+
+          var oldStateDescription = this.gamedatas.gamestate.descriptionmyturn;
+          this.gamedatas.gamestate.descriptionmyturn = _('You must select two cards');
+          this.updatePageTitle();
+          this.gamedatas.gamestate.descriptionmyturn = oldStateDescription;
+
+          this.removeActionButtons();
+          this.addActionButton('buttonCancelUseAbility', _('Cancel'), () => this.restartState(), null, false, 'gray');
         }
       },
 
@@ -346,18 +365,22 @@ define([
         this.toggleCard(card);
 
         const buttonVisible = $('buttonConfirmUseAbility');
-        if (this._selectedCards.length < this._amount) {
-          if (buttonVisible) dojo.destroy('buttonConfirmUseAbility');
+        if (this._selectedCards.length === this._amount && this._selectTargetPlayer) {
+          this.makePlayersSelectable(this._abilityTargets);
         } else {
-          if (!buttonVisible) {
-            this.addActionButton(
+          if (this._selectedCards.length < this._amount) {
+            if (buttonVisible) dojo.destroy('buttonConfirmUseAbility');
+          } else {
+            if (!buttonVisible) {
+              this.addActionButton(
                 'buttonConfirmUseAbility',
                 _('Confirm'),
                 'onClickConfirmUseAbility',
                 null,
                 false,
                 'blue',
-            );
+              );
+            }
           }
         }
       },
@@ -365,6 +388,7 @@ define([
       onClickConfirmUseAbility: function () {
         this.takeAction('actUseAbility', {
           cards: this._selectedCards.join(';'),
+          players: this._selectedPlayer
         });
       },
 

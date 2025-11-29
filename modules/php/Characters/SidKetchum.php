@@ -46,12 +46,13 @@ class SidKetchum extends Player
       ['player_name' => $this->name]
     );
 
-    Cards::discardMany($args);
-    if (Globals::getIsMustPlayCard() && in_array(Globals::getMustPlayCardId(), $args)) {
+    $cards = $args['cards'];
+    Cards::discardMany($cards);
+    if (Globals::getIsMustPlayCard() && in_array(Globals::getMustPlayCardId(), $cards)) {
       Globals::setIsMustPlayCard(false);
       Globals::setMustPlayCardId(0);
     }
-    Notifications::discardedCards($this, $args);
+    Notifications::discardedCards($this, $cards);
     $this->gainLife();
     $this->addRevivalAtomOrEliminate();
   }

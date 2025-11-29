@@ -249,6 +249,7 @@ class Players extends DB_Manager
     JOSE_DELGADO => 'JoseDelgado',
     ELENA_FUENTE => 'ElenaFuente',
     BELLE_STAR => 'BelleStar',
+    DOC_HOLYDAY => 'DocHolyday',
   ];
 
   /**
