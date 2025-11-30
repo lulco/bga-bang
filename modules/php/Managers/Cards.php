@@ -104,6 +104,7 @@ class Cards extends Pieces
     CARD_TEQUILA => 'Tequila',
     CARD_WHISKY => 'Whisky',
     CARD_RAG_TIME => 'RagTime',
+    CARD_LAST_CALL => 'LastCall',
   ];
 
   /**
