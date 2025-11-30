@@ -6,7 +6,6 @@ namespace Bang\Tests\CardsGetPlayOptions;
 
 use BANG\Cards\Tomahawk;
 use BANG\Managers\Players;
-use BANG\Managers\Rules;
 
 final class TomahawkPlayOptionsTest extends AbstractCardsGetPlayOptionsTest
 {
@@ -15,7 +14,6 @@ final class TomahawkPlayOptionsTest extends AbstractCardsGetPlayOptionsTest
     $player1 = $this->createPlayerMockWithNoCardsInPlay(PAUL_REGRET);
     $player2 = $this->createPlayerMockWithNoCardsInPlay(ROSE_DOOLAN);
     $player3 = $this->createPlayerMockWithNoCardsInPlay(SLAB_THE_KILLER);
-//    Rules::setAvailableRulesForTest([RULE_BEER_AVAILABLE]);
     Players::setPlayersForTest([
       $player1,
       $player2,
@@ -36,7 +34,6 @@ final class TomahawkPlayOptionsTest extends AbstractCardsGetPlayOptionsTest
     $player1 = $this->createPlayerMockWithNoCardsInPlay(SLAB_THE_KILLER);
     $player2 = $this->createPlayerMockWithNoCardsInPlay(ROSE_DOOLAN);
     $player3 = $this->createPlayerMockWithCardsInPlay(PAUL_REGRET, [CARD_MUSTANG, CARD_HIDEOUT]);
-//    Rules::setAvailableRulesForTest([RULE_BEER_AVAILABLE]);
     Players::setPlayersForTest([
       $player1,
       $player2,
