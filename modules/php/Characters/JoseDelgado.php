@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BANG\Characters;
 
+use BANG\Core\Globals;
 use BANG\Core\Notifications;
 use BANG\Managers\Cards;
 use BANG\Managers\Rules;
@@ -48,7 +49,7 @@ class JoseDelgado extends Player
       return;
     }
 
-    // TODO check card if it is blue
+    // TODO check cards if they are blue
     $cards = $args['cards'];
 
     Notifications::tell(
@@ -57,6 +58,10 @@ class JoseDelgado extends Player
     );
 
     Cards::discardMany($cards);
+    if (Globals::getIsMustPlayCard() && in_array(Globals::getMustPlayCardId(), $cards)) {
+      Globals::setIsMustPlayCard(false);
+      Globals::setMustPlayCardId(0);
+    }
     Notifications::discardedCards($this, $cards);
     $this->drawCards(2);
     $this->incrementAbilityUsage();

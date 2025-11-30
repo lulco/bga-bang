@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BANG\Characters;
 
 use BANG\Cards\Bang;
+use BANG\Core\Globals;
 use BANG\Core\Notifications;
 use BANG\Core\Stack;
 use BANG\Managers\Cards;
@@ -49,6 +50,10 @@ class DocHolyday extends Player
     $cards = $args['cards'];
 
     Cards::discardMany($cards);
+    if (Globals::getIsMustPlayCard() && in_array(Globals::getMustPlayCardId(), $cards)) {
+      Globals::setIsMustPlayCard(false);
+      Globals::setMustPlayCardId(0);
+    }
     Notifications::discardedCards($this, $cards);
     $this->incrementAbilityUsage();
 

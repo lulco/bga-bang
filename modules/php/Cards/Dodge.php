@@ -23,8 +23,8 @@ class Dodge extends BrownCard
 
   public function playCard($player)
   {
-      parent::playCard($player);
-      $player->onChangeHand();
-      $player->drawCards(1);
+    parent::playCard($player);
+    $player->onChangeHand();
+    $player->drawCards(1);
   }
 }
