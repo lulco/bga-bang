@@ -78,6 +78,7 @@ class bang extends Table
       'optionHighNoonAndFistful' => OPTION_HIGH_NOON_AND_FOC_EXPANSION,
       'optionDodgeCity' => OPTION_DODGE_CITY,
       'optionValleyOfShadows' => OPTION_VALLEY_OF_SHADOWS,
+      'optionGoldRush' => OPTION_GOLD_RUSH,
     ]);
   }
 
