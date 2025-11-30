@@ -61,6 +61,7 @@ define('OPTION_FISTFUL_OF_CARDS_EXPANSION', 113);
 define('OPTION_HIGH_NOON_AND_FOC_EXPANSION', 114);
 define('OPTION_HIGH_NOON_OR_FOC_EXPANSION', 115);
 define('OPTION_DODGE_CITY', 116);
+define('OPTION_VALLEY_OF_SHADOWS', 117);
 
 /*
  * OPTION_CHOOSE_CHARACTERS values
@@ -111,6 +112,7 @@ define('BASE_GAME', 0);
 define('HIGH_NOON', 1);
 define('DODGE_CITY', 2);
 define('FISTFUL_OF_CARDS', 3);
+define('VALLEY_OF_SHADOWS', 4);
 
 /*
  * Cards
@@ -164,6 +166,23 @@ define('CARD_CONESTOGA', 40);
 define('CARD_CAN_CAN', 41);
 define('CARD_BIBLE', 42);
 define('CARD_DERRINGER', 43);
+
+// Valley Of Shadows
+define('CARD_BOUNTY', 44);
+define('CARD_GOST', 45);
+define('CARD_LEMAT', 46);
+define('CARD_RATTLESNAKE', 47);
+define('CARD_SHOTGUN', 48);
+define('CARD_AIM', 49);
+define('CARD_BACKFIRE', 50);
+define('CARD_BANDIDOS', 51);
+define('CARD_ESCAPE', 52);
+define('CARD_FANNING', 53);
+define('CARD_LAST_CALL', 54);
+define('CARD_POKER', 55);
+define('CARD_SAVED', 56);
+define('CARD_TOMAHAWK', 57);
+define('CARD_TORNADO', 58);
 
 // Event cards
 define('CARD_BLESSING', 100);

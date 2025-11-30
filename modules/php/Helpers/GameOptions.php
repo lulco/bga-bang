@@ -34,6 +34,10 @@ class GameOptions
       $expansions[] = DODGE_CITY;
     }
 
+    if ((bool)bang::get()->getGameStateValue('optionValleyOfShadows')) {
+      $expansions[] = VALLEY_OF_SHADOWS;
+    }
+
     return $expansions;
   }
 
