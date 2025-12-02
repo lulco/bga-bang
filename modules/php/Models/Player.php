@@ -829,9 +829,25 @@ class Player extends DB_Manager
   {
     $atom = $this->getReactAtomForAttack($card, $targetCardId, $secondMissedNeeded);
     foreach (array_reverse($playerIds) as $pId) {
-      $atom['pId'] = $pId;
-      Stack::insertOnTop($atom);
+      $pId = (int)$pId;
+      $victim = Players::get($pId);
+      if ($victim->checkAttack($card)) {
+        // override atom for e.g. Duel
+        $atom = $card instanceof OtherAttackingCard ? $card->attack($this, $pId) : $atom;
+        $atom['pId'] = $pId;
+        Stack::insertOnTop($atom);
+      }
+      $victim->postAttack($card);
     }
+  }
+
+  public function checkAttack(AbstractCard $card): bool
+  {
+    return true;
+  }
+
+  public function postAttack(AbstractCard $card): void
+  {
   }
 
   public function getReactAtomForAttack(AbstractCard $card, ?int $targetCardId = null, bool $secondMissedNeeded = false): array

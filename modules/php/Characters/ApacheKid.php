@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace BANG\Characters;
 
+use BANG\Core\Notifications;
+use BANG\Managers\Rules;
+use BANG\Models\AbstractCard;
 use BANG\Models\Player;
 
 class ApacheKid extends Player
@@ -16,5 +19,31 @@ class ApacheKid extends Player
     $this->bullets = 3;
     $this->expansion = DODGE_CITY;
     parent::__construct($row);
+  }
+
+  public function checkAttack(AbstractCard $card): bool
+  {
+    if (!Rules::isAbilityAvailable()) {
+      return true;
+    }
+
+    if ($card->getSuit() !== 'D') {
+      return true;
+    }
+
+    return false;
+  }
+
+  public function postAttack(AbstractCard $card): void
+  {
+    if (!Rules::isAbilityAvailable()) {
+      return;
+    }
+
+    if ($card->getSuit() !== 'D') {
+      return;
+    }
+
+    Notifications::tell('Diamond cards have no effect against Apache Kid');
   }
 }
