@@ -156,7 +156,12 @@ class action_bang extends APP_GameAction
   {
     self::setAjaxMode();
     $cards = array_map('intval', explode(';', self::getArg('cards', AT_numberlist, false)));
-    $this->game->useAbility($cards);
+    $players = array_map('intval', explode(';', self::getArg('players', AT_numberlist, false)));
+    $args = array_filter([
+      'cards' => $cards,
+      'players' => $players,
+    ]);
+    $this->game->useAbility($args);
     self::ajaxResponse();
   }
 

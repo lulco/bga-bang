@@ -9,12 +9,12 @@ use BANG\Managers\Cards;
 use BANG\Models\AbstractCard;
 use BANG\Models\Player;
 use BgaVisibleSystemException;
-use PHPUnit\Framework\MockObject\MockObject;
 
 trait PlayerMockerAndFaker
 {
+  private int $playerIdAutoincrement = 12345;
+
   private array $playerData = [
-    'player_id' => 123,
     'player_no' => 1,
     'player_name' => 'Test',
     'player_color' => 'red',
@@ -26,10 +26,14 @@ trait PlayerMockerAndFaker
     'player_alt_character' => -1,
     'player_unconscious' => FULLY_ALIVE,
     'player_agreed_to_disclaimer' => 1,
+    'player_hp' => 4,
+    'player_bullets' => 4,
+    'player_character' => 0,
   ];
 
   protected function getPlayerData(array $override = []): array
   {
+    $override['player_id'] = $this->playerIdAutoincrement++;
     return array_merge($this->playerData, $override);
   }
 

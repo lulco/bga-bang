@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Characters;
 
 use BANG\Managers\Rules;
+use BANG\Models\Player;
 
-class SeanMallory extends \BANG\Models\Player
+class SeanMallory extends Player
 {
-  public function __construct($row = null)
+  public function __construct(?array $row = null)
   {
     $this->character = SEAN_MALLORY;
     $this->character_name = clienttranslate('Sean Mallory');
@@ -16,7 +19,7 @@ class SeanMallory extends \BANG\Models\Player
     parent::__construct($row);
   }
 
-  public function getMaxCards()
+  public function getMaxCards(): int
   {
     if (!Rules::isAbilityAvailable()) {
       return parent::getMaxCards();

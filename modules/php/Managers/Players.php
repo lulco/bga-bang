@@ -30,7 +30,11 @@ class Players extends DB_Manager
   public static function setPlayersForTest(array $players): void
   {
     self::$isTest = true;
-    self::$players = new Collection($players);
+    $playersWithKeys = [];
+    foreach ($players as $player) {
+      $playersWithKeys[$player->getId()] = $player;
+    }
+    self::$players = new Collection($playersWithKeys);
   }
 
   protected static function getGame()
@@ -77,7 +81,7 @@ class Players extends DB_Manager
     $playersCount = count($players);
 
     // Compute roles and shuffle them
-    $roles = array_slice([SHERIFF, RENEGADE, OUTLAW, OUTLAW, DEPUTY, OUTLAW, DEPUTY], 0, $playersCount);
+    $roles = array_slice([SHERIFF, RENEGADE, OUTLAW, OUTLAW, DEPUTY, OUTLAW, DEPUTY, RENEGADE], 0, $playersCount);
     shuffle($roles);
 
     // Handle forced characters
@@ -196,14 +200,14 @@ class Players extends DB_Manager
     return self::get(self::getCurrentId());
   }
 
-  public static function count()
+  public static function count(): int
   {
     return self::DB()->count();
   }
 
-  public static function getUiData($pId)
+  public static function getUiData(int $pId)
   {
-    return self::getAll()->map(function ($player) use ($pId) {
+    return self::getAll()->map(function (Player $player) use ($pId) {
       return $player->getUiData($pId);
     });
   }
@@ -249,6 +253,9 @@ class Players extends DB_Manager
     JOSE_DELGADO => 'JoseDelgado',
     ELENA_FUENTE => 'ElenaFuente',
     BELLE_STAR => 'BelleStar',
+    DOC_HOLYDAY => 'DocHolyday',
+    APACHE_KID => 'ApacheKid',
+    PAT_BRENNAN => 'PatBrennan',
   ];
 
   /**
@@ -267,7 +274,7 @@ class Players extends DB_Manager
     return $result;
   }
 
-  public static function getCharacter($cId, $row = null)
+  public static function getCharacter($cId, $row = null): Player
   {
     $className = 'BANG\Characters\\' . self::$classes[$cId];
     return new $className($row);
@@ -317,6 +324,15 @@ class Players extends DB_Manager
    */
   public static function getPlayerPositions()
   {
+    if (self::$isTest) {
+      $positions = [];
+      $i = 0;
+      foreach (self::$players as $player) {
+        $positions[$player->getId()] = $i++;
+      }
+      return $positions;
+    }
+
     return array_flip(
       self::getObjectListFromDB("SELECT player_id from player WHERE player_eliminated = 0 AND player_unconscious != 1 ORDER BY player_no", true)
     );
@@ -343,7 +359,7 @@ class Players extends DB_Manager
    * @param int|null $exceptId
    * @return array
    */
-  public static function getLivingPlayerIdsStartingWith($player, $includeGhosts = false, $exceptId = null)
+  public static function getLivingPlayerIdsStartingWith($player, $includeGhosts = false, $exceptId = null): array
   {
     $and = '';
     if ($exceptId !== null) {
@@ -385,12 +401,7 @@ class Players extends DB_Manager
     return new Collection($playersAssoc);
   }
 
-  /**
-   * @param Player $player
-   * @param boolean $includeGhosts
-   * @return int
-   */
-  public static function getNextId($player, $includeGhosts = false)
+  public static function getNextId(Player $player, bool $includeGhosts = false): int
   {
     $playersIds = self::getLivingPlayerIdsStartingWith($player, $includeGhosts);
     // But current player might not be alive already... Let's find them
@@ -401,22 +412,12 @@ class Players extends DB_Manager
     return $playersIds[$currentIndex + 1];
   }
 
-  /**
-   * @param Player $player
-   * @param boolean $includeGhosts
-   * @return Player
-   */
-  public static function getNext($player, $includeGhosts = false)
+  public static function getNext(Player $player, bool $includeGhosts = false): Player
   {
     return self::get(self::getNextId($player, $includeGhosts));
   }
 
-  /**
-   * @param Player $player
-   * @param boolean $includeGhosts
-   * @return Player
-   */
-  public static function getPreviousId($player, $includeGhosts = false)
+  public static function getPreviousId(Player $player, bool $includeGhosts = false): int
   {
     $players = self::getLivingPlayerIdsStartingWith($player, $includeGhosts);
     return $players[count($players)-1];
@@ -426,9 +427,9 @@ class Players extends DB_Manager
    * Returns a whole list of all players who agreed to Ghost Town/resurrection possibility disclaimer
    * @return array
    */
-  public static function getNotAgreedToDisclaimerList()
+  public static function getNotAgreedToDisclaimerList(): array
   {
-    $notAgreedToDisclaimer = self::getLivingPlayers()->map(function ($player) {
+    $notAgreedToDisclaimer = self::getLivingPlayers()->map(function (Player $player) {
       return !$player->isAgreedToDisclaimer();
     });
     return array_keys(array_filter($notAgreedToDisclaimer->toAssoc(), 'strlen'));

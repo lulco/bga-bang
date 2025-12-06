@@ -24,7 +24,7 @@ trait CardPlayTrait
     // Played card always go to the discard
     $this->discard();
 
-    if (isset($this->effect['additional_card'])) {
+    if (isset($effect['additional_card'])) {
       if (!isset($args['additionalCardId'])) {
         // TODO some error message?
         return;
@@ -58,15 +58,19 @@ trait CardPlayTrait
 
         // Drawing/discarding from someone's hand/inplay
         $victim = Players::get($args['player']);
-        $card = $args['type'] == 'player' ? $victim->getRandomCardInHand() : Cards::get($args['arg']);
-        // TODO: Support Panic yourself more elegantly
-        if ($effect['type'] == DRAW) {
-          Cards::stole($card, $player);
-          Notifications::stoleCard($player, $victim, $card, $args['type'] == LOCATION_INPLAY);
-        } else {
-          $victim->discardCard($card);
+        if ($victim->checkAttack($this)) {
+          $card = $args['type'] == 'player' ? $victim->getRandomCardInHand() : Cards::get($args['arg']);
+          // TODO: Support Panic yourself more elegantly
+          if ($effect['type'] == DRAW) {
+            Cards::stole($card, $player);
+            Notifications::stoleCard($player, $victim, $card, $args['type'] == LOCATION_INPLAY);
+          } else {
+            $victim->discardCard($card);
+          }
+          $victim->onChangeHand();
         }
-        $victim->onChangeHand();
+        $victim->postAttack($this);
+
         break;
       case LIFE_POINT_MODIFIER:
         $targets = [];
