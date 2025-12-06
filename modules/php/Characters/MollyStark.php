@@ -23,7 +23,7 @@ Indians!), she draws one card from the deck.'),
     parent::__construct($row);
   }
 
-  public function react($ids)
+  public function react($ids): void
   {
     parent::react($ids);
     if (!is_null($ids)) {
