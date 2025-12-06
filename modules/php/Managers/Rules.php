@@ -20,16 +20,24 @@ class Rules extends DB_Manager
   /** @var bool use for tests only together with $testActiveCard */
   protected static bool $isTest = false;
 
-  /** @var array<string, bool> used for tests only */
+  /** @var array<string, mixed> used for tests only */
   protected static array $availableRules = [];
 
+  protected static ?Player $currentPlayer = null;
+
+  /**
+   * @param array<string, mixed> $availableRules
+   */
   public static function setAvailableRulesForTest(array $availableRules): void
   {
     self::$isTest = true;
-    self::$availableRules = []; // reset
-    foreach ($availableRules as $rule) {
-      self::$availableRules[$rule] = true;
-    }
+    self::$availableRules = $availableRules;
+  }
+
+  public static function setCurrentPlayer(?Player $currentPlayer = null): void
+  {
+    self::$isTest = true;
+    self::$currentPlayer = $currentPlayer;
   }
 
   /*
@@ -121,6 +129,9 @@ class Rules extends DB_Manager
 
   public static function getCurrentPlayerId()
   {
+    if (self::$isTest) {
+      return self::$currentPlayer ? self::$currentPlayer->getId() : 0;
+    }
     $current = self::get();
     return $current ? (int) $current['player_id'] : 0;
   }

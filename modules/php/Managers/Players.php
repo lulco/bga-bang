@@ -254,6 +254,7 @@ class Players extends DB_Manager
     ELENA_FUENTE => 'ElenaFuente',
     BELLE_STAR => 'BelleStar',
     DOC_HOLYDAY => 'DocHolyday',
+    APACHE_KID => 'ApacheKid',
   ];
 
   /**

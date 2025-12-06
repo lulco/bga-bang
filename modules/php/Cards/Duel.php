@@ -7,10 +7,11 @@ namespace BANG\Cards;
 use BANG\Managers\Players;
 use BANG\Core\Stack;
 use BANG\Models\AbstractCard;
+use BANG\Models\OtherAttackingCard;
 use BANG\Models\BrownCard;
 use BANG\Models\Player;
 
-class Duel extends BrownCard
+class Duel extends BrownCard implements OtherAttackingCard
 {
   public function __construct(?array $params = null)
   {
@@ -45,17 +46,19 @@ class Duel extends BrownCard
   public function play(Player $player, array $args): void
   {
     parent::play($player, $args);
-    $atom = Stack::newAtom(ST_REACT, [
+    $player->attack($this, [$args['player']]);
+  }
+
+  public function attack(Player $player, int $targetPlayerId): array
+  {
+    return Stack::newAtom(ST_REACT, [
       'type' => REACT_TYPE_DUEL,
       'msgActive' => clienttranslate('${you} may react to the duel by discarding a Bang!'),
       'msgInactive' => clienttranslate('${actplayer} may react to the duel by discarding a Bang!'),
       'src' => $this->jsonSerialize(),
       'attacker' => $player->getId(),
-      'opponent' => $args['player'],
-      'pId' => $args['player'],
+      'opponent' => $targetPlayerId,
     ]);
-
-    Stack::insertOnTop($atom);
   }
 
   public function getReactionOptions(Player $player): array
