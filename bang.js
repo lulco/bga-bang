@@ -398,6 +398,7 @@ define([
       onEnteringStateDrawCard: function (args) {
         this._action = 'drawCard';
         var players = [];
+        var cards = [];
         args._private.options.forEach((option) => {
           switch (option) {
             case 'deck':
@@ -405,6 +406,9 @@ define([
               break;
             case 'discard':
               this.makeDiscardSelectable();
+              break;
+            case 'cards':
+              this.makeCardSelectable(args._private.cards, 'drawInPlayCard');
               break;
             default:
               players.push(option);
@@ -440,6 +444,10 @@ define([
 
       onClickDraw: function (arg) {
         this.takeAction('actDraw', { selected: arg });
+      },
+
+      onClickCardDrawInPlayCard: function (arg) {
+        if (this._action === 'drawInPlayCard') this.onClickDraw(arg.id);
       },
 
       onClickAgreeToDisclaimer() {
