@@ -26,6 +26,9 @@ trait PlayerMockerAndFaker
     'player_alt_character' => -1,
     'player_unconscious' => FULLY_ALIVE,
     'player_agreed_to_disclaimer' => 1,
+    'player_hp' => 4,
+    'player_bullets' => 4,
+    'player_character' => 0,
   ];
 
   protected function getPlayerData(array $override = []): array

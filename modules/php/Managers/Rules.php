@@ -23,6 +23,8 @@ class Rules extends DB_Manager
   /** @var array<string, mixed> used for tests only */
   protected static array $availableRules = [];
 
+  protected static ?Player $currentPlayer = null;
+
   /**
    * @param array<string, mixed> $availableRules
    */
@@ -30,6 +32,12 @@ class Rules extends DB_Manager
   {
     self::$isTest = true;
     self::$availableRules = $availableRules;
+  }
+
+  public static function setCurrentPlayer(?Player $currentPlayer = null): void
+  {
+    self::$isTest = true;
+    self::$currentPlayer = $currentPlayer;
   }
 
   /*
@@ -121,6 +129,9 @@ class Rules extends DB_Manager
 
   public static function getCurrentPlayerId()
   {
+    if (self::$isTest) {
+      return self::$currentPlayer ? self::$currentPlayer->getId() : 0;
+    }
     $current = self::get();
     return $current ? (int) $current['player_id'] : 0;
   }
