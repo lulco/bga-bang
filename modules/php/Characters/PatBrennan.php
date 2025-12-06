@@ -56,31 +56,28 @@ class PatBrennan extends Player
       $inPlayCards = array_merge($inPlayCards, $player->getCardsInPlay()->toArray());
     }
 
-    $options = $inPlayCards;
-    $options[] = Rules::getDrawOrDiscardCardsLocation(LOCATION_DECK);
-
-//    var_dump($options);
-
-    return ['options' => $options, 'cards' => $inPlayCards];
+    $drawOptions = [
+      'options' => [Rules::getDrawOrDiscardCardsLocation(LOCATION_DECK)]
+    ];
+    if ($inPlayCards !== []) {
+      $drawOptions['options'][] = 'cards';
+      $drawOptions['cards'] = $inPlayCards;
+    }
+    return $drawOptions;
   }
 
   public function useAbility($args)
   {
-      var_dump($args);
-//        exit;
-
     if ($args['selected'] === LOCATION_DECK) {
       $cards = Cards::deal($this->id, 2);
       Notifications::drawCards($this, $cards);
     } else {
       /** @var AbstractCard $card */
       $card = Cards::get($args['selected']);
-      var_dump($card->getLocation());
 
+      $victim = Players::get($card->getOwner());
       Cards::move($card->getId(), LOCATION_HAND, $this->id);
-
-//      Notifications::stoleCard($this, $victim, $card, true);
-//      $victim->oncha();
+      Notifications::stoleCard($this, $victim, $card, true);
     }
   }
 }

@@ -38,8 +38,9 @@ abstract class AbstractCard implements JsonSerializable
         $this->color = $params['color'];
       }
       if (array_key_exists('location', $params)) {
-        $locationParts = explode('_', $params['location']);
+        $locationParts = explode('_', $params['location'], 2);
         $this->location = $locationParts[0] ?? null;
+        $this->owner = $locationParts[1] ?? null;
       }
     }
   }
@@ -51,6 +52,7 @@ abstract class AbstractCard implements JsonSerializable
   protected $color;
   protected $value;
   protected $location;
+  protected $owner;
   protected $border = '';
 
   // Static information about cards
@@ -105,6 +107,11 @@ abstract class AbstractCard implements JsonSerializable
   public function getLocation()
   {
     return $this->location;
+  }
+
+  public function getOwner()
+  {
+    return $this->owner;
   }
 
   public function getName()
