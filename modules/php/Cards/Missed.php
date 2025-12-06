@@ -1,11 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 namespace BANG\Cards;
 
-class Missed extends \BANG\Models\BrownCard
+use BANG\Models\AbstractCard;
+use BANG\Models\BrownCard;
+use BANG\Models\Player;
+
+class Missed extends BrownCard
 {
-  public function __construct($id = null, $copy = '')
+  public function __construct(?array $params = null)
   {
-    parent::__construct($id, $copy);
+    parent::__construct($params);
     $this->type = CARD_MISSED;
     $this->name = clienttranslate('Missed!');
     $this->text = clienttranslate('Discard to avoid an attack');
@@ -13,19 +20,19 @@ class Missed extends \BANG\Models\BrownCard
     $this->copies = [
       BASE_GAME => ['10C', 'JC', 'QC', 'KC', 'AC', '2S', '3S', '4S', '5S', '6S', '7S', '8S'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['8D'],
     ];
     $this->effect = ['type' => DEFENSIVE];
   }
 
   // react and pass can only happen when played as BANG by Calamity Janet
-  public function react($card, $player)
+  public function react(AbstractCard $card, Player $player): void
   {
     $bang = new Bang();
     $bang->react($card, $player);
   }
 
-  public function pass($player)
+  public function pass(Player $player): void
   {
     $bang = new Bang();
     $bang->pass($player);

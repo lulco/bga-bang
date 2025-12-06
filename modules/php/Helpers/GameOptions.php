@@ -12,27 +12,35 @@ class GameOptions
 
   public static function getExpansions()
   {
+    $expansions = [];
     switch ((int) bang::get()->getGameStateValue('optionExpansions')) {
       case OPTION_HIGH_NOON_ONLY:
-        return [HIGH_NOON];
+        $expansions = [HIGH_NOON];
+        break;
       case OPTION_FISTFUL_OF_CARDS_ONLY:
-        return [FISTFUL_OF_CARDS];
+        $expansions = [FISTFUL_OF_CARDS];
+        break;
       case OPTION_HIGH_NOON_AND_FOC:
-        return [HIGH_NOON, FISTFUL_OF_CARDS];
+        $expansions = [HIGH_NOON, FISTFUL_OF_CARDS];
+        break;
       case OPTION_HIGH_NOON_OR_FOC:
         $expansionIndex = bga_rand(0, 1);
         $chosenExpansion = [HIGH_NOON, FISTFUL_OF_CARDS][$expansionIndex];
-        return [$chosenExpansion];
-      default:
-        return [];
+        $expansions = [$chosenExpansion];
+        break;
     }
+
+    if ((bool)bang::get()->getGameStateValue('optionDodgeCity')) {
+      $expansions[] = DODGE_CITY;
+    }
+
+    return $expansions;
   }
 
   /**
    * Are we playing with events which resurrect players at some point?
-   * @return boolean
    */
-  public static function isResurrection()
+  public static function isResurrection(): bool
   {
     $highNoonWithGhosts = self::getOption('optionExpansions') === OPTION_HIGH_NOON_ONLY &&
       self::getOption('optionHighNoon') === OPTION_HIGH_NOON_WITH_GHOST_TOWN;
@@ -45,16 +53,15 @@ class GameOptions
     return $highNoonWithGhosts || $fistfulWithGhosts || $bothWithGhosts || $singleWithGhosts;
   }
 
-  private static function getOption($optionName)
+  private static function getOption($optionName): int
   {
     return (int) bang::get()->getGameStateValue($optionName);
   }
 
   /**
    * isEvents: are events enabled for this game?
-   * @return string
    */
-  public static function isEvents()
+  public static function isEvents(): bool
   {
     return count(array_intersect([HIGH_NOON, FISTFUL_OF_CARDS], self::getExpansions())) > 0;
   }

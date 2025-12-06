@@ -1,11 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 namespace BANG\Cards;
 
-class CatBalou extends \BANG\Models\BrownCard
+use BANG\Models\BrownCard;
+
+class CatBalou extends BrownCard
 {
-  public function __construct($id = null, $copy = '')
+  public function __construct(?array $params = null)
   {
-    parent::__construct($id, $copy);
+    parent::__construct($params);
     $this->type = CARD_CAT_BALOU;
     $this->name = clienttranslate('Cat Balou');
     $this->text = clienttranslate('Chosen player discards a card of your choice.');
@@ -13,7 +18,7 @@ class CatBalou extends \BANG\Models\BrownCard
     $this->copies = [
       BASE_GAME => ['KH', '9D', '10D', 'JD'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['8C'],
     ];
     $this->effect = [
       'type' => DISCARD,

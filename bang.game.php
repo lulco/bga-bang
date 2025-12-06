@@ -76,8 +76,10 @@ class bang extends Table
       'optionHighNoon' => OPTION_HIGH_NOON_EXPANSION,
       'optionFistful' => OPTION_FISTFUL_OF_CARDS_EXPANSION,
       'optionHighNoonAndFistful' => OPTION_HIGH_NOON_AND_FOC_EXPANSION,
+      'optionDodgeCity' => OPTION_DODGE_CITY,
     ]);
   }
+
   public static function get()
   {
     return self::$instance;
@@ -88,14 +90,17 @@ class bang extends Table
     return 'bang';
   }
 
-  /*
+  /**
    * setupNewGame:
    *  This method is called only once, when a new game is launched.
    * params:
-   *  - array $bplayers
-   *  - mixed $options
+   * @param array $players
+   * @param array $options
+   * @return void
+   *
+   * @throws feException
    */
-  protected function setupNewGame($bplayers, $options = [])
+  protected function setupNewGame($players, $options = [])
   {
     // Initialize board and cards
     $expansions = array_merge([BASE_GAME], GameOptions::getExpansions());
@@ -105,7 +110,7 @@ class bang extends Table
     }
 
     // Initialize players
-    $sheriff = Players::setupNewGame($bplayers, $expansions, $options);
+    $sheriff = Players::setupNewGame($players, $expansions, $options);
 
     // Initialize round counter
     Globals::setRoundNumber(0);

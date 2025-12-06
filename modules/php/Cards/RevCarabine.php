@@ -1,11 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 namespace BANG\Cards;
 
-class RevCarabine extends \BANG\Models\WeaponCard
+use BANG\Models\WeaponCard;
+
+class RevCarabine extends WeaponCard
 {
-  public function __construct($id = null, $copy = '')
+  public function __construct(?array $params = null)
   {
-    parent::__construct($id, $copy);
+    parent::__construct($params);
     $this->type = CARD_REV_CARABINE;
     $this->name = clienttranslate('Rev. Carabine');
     $this->text = clienttranslate('Range: 4');
@@ -13,7 +18,7 @@ class RevCarabine extends \BANG\Models\WeaponCard
     $this->copies = [
       BASE_GAME => ['AC'],
       HIGH_NOON => [],
-      DODGE_CITY => [],
+      DODGE_CITY => ['5S'],
     ];
     $this->effect = [
       'type' => OTHER,

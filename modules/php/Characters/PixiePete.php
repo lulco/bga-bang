@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+namespace BANG\Characters;
+
+use BANG\Models\Player;
+
+class PixiePete extends Player
+{
+  public function __construct(?array $row = null)
+  {
+    $this->character = PIXIE_PETE;
+    $this->character_name = clienttranslate('Pixie Pete');
+    $this->text = [clienttranslate('During phase 1 of his turn, he draws 3 cards instead of 2.')];
+    $this->bullets = 3;
+    $this->expansion = DODGE_CITY;
+    parent::__construct($row);
+  }
+
+  public function defaultCardsToDraw(): int
+  {
+    return 3;
+  }
+}
