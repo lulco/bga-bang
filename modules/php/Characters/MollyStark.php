@@ -22,4 +22,12 @@ Indians!), she draws one card from the deck.'),
     $this->expansion = DODGE_CITY;
     parent::__construct($row);
   }
+
+  public function react($ids): void
+  {
+    parent::react($ids);
+    if (!is_null($ids)) {
+      $this->drawCards(count($ids));
+    }
+  }
 }
