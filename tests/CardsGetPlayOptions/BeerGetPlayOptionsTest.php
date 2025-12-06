@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bang\Tests\CardsGetPlayOptions;
 
 use BANG\Cards\Beer;
+use BANG\Managers\EventCards;
 use BANG\Managers\Players;
 use BANG\Managers\Rules;
 
@@ -14,7 +15,7 @@ final class BeerGetPlayOptionsTest extends AbstractCardsGetPlayOptionsTest
   {
     $player = $this->createPlayerMockWithNoCardsInPlay(PAUL_REGRET);
 
-    Rules::setAvailableRulesForTest([RULE_BEER_AVAILABLE]);
+    Rules::setAvailableRulesForTest([RULE_BEER_AVAILABLE => 1]);
     Players::setPlayersForTest([
       $player,
       $this->createPlayerMockWithNoCardsInPlay(ROSE_DOOLAN),
@@ -34,7 +35,7 @@ final class BeerGetPlayOptionsTest extends AbstractCardsGetPlayOptionsTest
   {
     $player = $this->createPlayerMockWithNoCardsInPlay(PAUL_REGRET);
 
-    Rules::setAvailableRulesForTest([RULE_BEER_AVAILABLE]);
+    Rules::setAvailableRulesForTest([RULE_BEER_AVAILABLE => 1]);
     Players::setPlayersForTest([
       $player,
       $this->createPlayerMockWithNoCardsInPlay(ROSE_DOOLAN),
@@ -87,7 +88,7 @@ final class BeerGetPlayOptionsTest extends AbstractCardsGetPlayOptionsTest
   {
     $player = $this->createPlayerMockWithNoCardsInPlay(PAUL_REGRET, 2);
 
-    Rules::setAvailableRulesForTest([RULE_BEER_AVAILABLE]);
+    Rules::setAvailableRulesForTest([RULE_BEER_AVAILABLE => 1]);
     Players::setPlayersForTest([
       $player,
       $this->createPlayerMockWithNoCardsInPlay(ROSE_DOOLAN),
@@ -106,7 +107,7 @@ final class BeerGetPlayOptionsTest extends AbstractCardsGetPlayOptionsTest
   {
     $player = $this->createPlayerMockWithNoCardsInPlay(PAUL_REGRET, 2);
 
-    Rules::setAvailableRulesForTest([RULE_BEER_AVAILABLE]);
+    Rules::setAvailableRulesForTest([RULE_BEER_AVAILABLE => 1]);
     Players::setPlayersForTest([
       $player,
       $this->createPlayerMockWithNoCardsInPlay(ROSE_DOOLAN),

@@ -6,6 +6,7 @@ use BANG\Cards\Barrel;
 use BANG\Core\Stack;
 use BANG\Managers\Cards;
 use BANG\Core\Notifications;
+use BANG\Managers\EventCards;
 use JsonSerializable;
 
 /**
@@ -141,8 +142,12 @@ abstract class AbstractCard implements JsonSerializable
     return null; // Will be overwrite by Blue/Brown class
   }
 
-  public function getSuit()
+  public function getSuit(bool $includingOverride = false)
   {
+    if ($includingOverride === true) {
+      $event = EventCards::getActive();
+      return $event ? $event->getSuitOverride() : $this->color;
+    }
     return $this->color;
   }
 

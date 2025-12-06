@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BANG\Characters;
 
 use BANG\Core\Notifications;
+use BANG\Managers\EventCards;
 use BANG\Managers\Rules;
 use BANG\Models\AbstractCard;
 use BANG\Models\Player;
@@ -27,7 +28,7 @@ class ApacheKid extends Player
       return true;
     }
 
-    if ($card->getSuit() !== 'D') {
+    if ($card->getSuit(true) !== 'D') {
       return true;
     }
 
