@@ -11,6 +11,7 @@ use BANG\Core\Notifications;
 use BANG\Core\Stack;
 use BANG\Managers\Rules;
 use bang;
+use BANG\Models\GreenCard;
 
 trait TurnTrait
 {
@@ -71,7 +72,7 @@ trait TurnTrait
       ST_PLAY_CARD,
       ST_DISCARD_EXCESS,
       ST_RESOLVE_END_OF_TURN_EVENTS,
-      ST_END_OF_TURN
+      ST_END_OF_TURN,
     ];
     $isAdditionalTurn = $eventCard && $eventCard instanceof Vendetta && Globals::getVendettaWasUsed();
     array_unshift($stack, ST_RESOLVE_BEFORE_PHASE_ONE_EVENT_EFFECT);
@@ -157,6 +158,12 @@ trait TurnTrait
   {
     $player = Players::getActive();
     $player->resetAbilityUsage();
+
+    // Activate inactive green cards
+    /** @var GreenCard $cardInPlayInactive */
+    foreach ($player->getCardsInPlayInactive() as $cardInPlayInactive) {
+      Cards::equip($cardInPlayInactive->getId(), $player->getId());
+    }
 
     // To make sure we will switch to next player after this one.
     // We had a bug when Suzy Lafayette was drawing a card and "capturing" active player status while real active player was dying

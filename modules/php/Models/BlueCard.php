@@ -15,12 +15,12 @@ class BlueCard extends AbstractCard
     return BLUE;
   }
 
-  public function isEquipment()
+  public function targetLocationAfterPlay(): string
   {
-    return true;
+    return LOCATION_INPLAY;
   }
 
-  public function getPlayOptions($player)
+  public function getPlayOptions(Player $player): ?array
   {
     foreach ($player->getCardsInPlay() as $card) {
       if ($card->type == $this->type) {
@@ -30,7 +30,7 @@ class BlueCard extends AbstractCard
     return Rules::isCanPlayBlueGreenCards() ? ['target_types' => [TARGET_NONE]] : null;
   }
 
-  public function play($player, $args)
+  public function play(Player $player, array $args): void
   {
     Cards::equip($this->id, $player->getId());
   }

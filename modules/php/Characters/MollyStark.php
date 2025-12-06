@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Characters;
 
-class MollyStark extends \BANG\Models\Player
+use BANG\Models\Player;
+
+class MollyStark extends Player
 {
-  public function __construct($row = null)
+  public function __construct(?array $row = null)
   {
     $this->character = MOLLY_STARK;
     $this->character_name = clienttranslate('Molly Stark');

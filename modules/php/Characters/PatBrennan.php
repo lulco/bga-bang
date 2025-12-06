@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Characters;
 
 use BANG\Core\Notifications;
@@ -7,11 +9,12 @@ use BANG\Core\Stack;
 use BANG\Managers\Cards;
 use BANG\Managers\Players;
 use BANG\Managers\Rules;
+use BANG\Models\AbstractCard;
 use BANG\Models\Player;
 
 class PatBrennan extends Player
 {
-  public function __construct($row = null)
+  public function __construct(?array $row = null)
   {
     $this->character = PAT_BRENNAN;
     $this->character_name = clienttranslate('Pat Brennan');
@@ -21,32 +24,30 @@ class PatBrennan extends Player
     parent::__construct($row);
   }
 
-
-    public function getPhaseOneRules($defaultAmount, $isAbilityAvailable = true)
-    {
-        if ($isAbilityAvailable) {
-            return [
-                RULE_PHASE_ONE_CARDS_DRAW_BEGINNING => 0,
-                RULE_PHASE_ONE_PLAYER_ABILITY_DRAW => true,
-                RULE_PHASE_ONE_CARDS_DRAW_END => 0,
-            ];
-        } else {
-            return parent::getPhaseOneRules($defaultAmount);
-        }
+  public function getPhaseOneRules(int $defaultAmount, bool $isAbilityAvailable = true): array
+  {
+    if ($isAbilityAvailable) {
+      return [
+        RULE_PHASE_ONE_CARDS_DRAW_BEGINNING => 0,
+        RULE_PHASE_ONE_PLAYER_ABILITY_DRAW => true,
+        RULE_PHASE_ONE_CARDS_DRAW_END => 0,
+      ];
+    } else {
+      return parent::getPhaseOneRules($defaultAmount);
     }
+  }
 
+  public function drawCardsPhaseOne()
+  {
+    // TODO : auto skip if argDrawCard only has 'deck' inside
+    $ctx = Stack::getCtx();
+    Stack::insertOnTop(Stack::newAtom(ST_ACTIVE_DRAW_CARD, [
+      'pId' => $this->getId(),
+      'storeResult' => isset($ctx['storeResult']) && $ctx['storeResult'],
+    ]));
+  }
 
-    public function drawCardsPhaseOne()
-    {
-        // TODO : auto skip if argDrawCard only has 'deck' inside
-        $ctx = Stack::getCtx();
-        Stack::insertOnTop(Stack::newAtom(ST_ACTIVE_DRAW_CARD, [
-            'pId' => $this->getId(),
-            'storeResult' => isset($ctx['storeResult']) && $ctx['storeResult'],
-        ]));
-    }
-
-  public function argDrawCard()
+  public function argDrawCard(): array
   {
     $otherPlayers = Players::getLivingPlayers($this->id);
     $inPlayCards = [];
@@ -60,22 +61,26 @@ class PatBrennan extends Player
 
 //    var_dump($options);
 
-    return ['options' => $options];
+    return ['options' => $options, 'cards' => $inPlayCards];
   }
 
-    public function useAbility($args)
-    {
-        var_dump($args);
+  public function useAbility($args)
+  {
+      var_dump($args);
 //        exit;
 
-        if ($args['selected'] === LOCATION_DECK) {
-            $cards = Cards::deal($this->id, 2);
-            Notifications::drawCards($this, $cards);
-        } else {
-            $card = Cards::get($args['selected']);
-            Cards::move($card->getId(), LOCATION_HAND, $this->id);
-            Notifications::stoleCard($this, $victim, $card, true);
-            $victim->onch();
-        }
+    if ($args['selected'] === LOCATION_DECK) {
+      $cards = Cards::deal($this->id, 2);
+      Notifications::drawCards($this, $cards);
+    } else {
+      /** @var AbstractCard $card */
+      $card = Cards::get($args['selected']);
+      var_dump($card->getLocation());
+
+      Cards::move($card->getId(), LOCATION_HAND, $this->id);
+
+//      Notifications::stoleCard($this, $victim, $card, true);
+//      $victim->oncha();
     }
+  }
 }

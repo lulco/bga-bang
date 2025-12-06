@@ -279,7 +279,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         destroyCallback: this.removeDialog.bind(this),
       });
 
-      [0, 2, 2, 3, 1, 2, 1].forEach((roleId, i) => {
+      [0, 3, 2, 2, 1, 2, 1, 3].forEach((roleId, i) => {
         if (i >= Object.keys(this.gamedatas.players).length) return;
 
         if ($('dialog-role-count-' + roleId)) {
@@ -321,16 +321,24 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     onClickPlayer(playerId) {
       if (!this._selectablePlayers.includes(playerId)) return;
 
-      if (this._action == 'drawCard') {
+      const CARD_JAIL = 17;
+      const CARD_PANIC = 11;
+      const CARD_CAT_BALOU = 12;
+      const CARD_RAG_TIME = 29;
+
+      const DOC_HOLYDAY = 29;
+
+      if (this._action === 'useAbility' && this._useAbilityOption === DOC_HOLYDAY) {
+        this._selectedPlayer = playerId;
+        this.onClickConfirmUseAbility();
+      } else if (this._action === 'drawCard') {
         this.onClickDraw(playerId);
-      } else if (this._action == 'bloodBrothers') {
+      } else if (this._action === 'bloodBrothers') {
         this.onClickPlayerBloodBrothers(playerId)
       } else {
         this._selectedOptionType = 'player';
         this._selectedPlayer = playerId;
-        const CARD_JAIL = 17;
-        const CARD_PANIC = 11;
-        const CARD_CAT_BALOU = 12;
+
         if (this._selectedCard && this._selectedCard.type === CARD_JAIL && playerId === this.player_id) {
           this.confirmationDialog(_('Are you sure you want to put yourself to Jail?'), () => {
             this.onSelectOption();
@@ -340,7 +348,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             this.onSelectOption();
           });
         } else if (this._selectedCard && this._selectedCard.type === CARD_CAT_BALOU && playerId === this.player_id) {
-          this.confirmationDialog(_('Are you sure you want to use Cat balou against yourself?'), () => {
+          this.confirmationDialog(_('Are you sure you want to use Cat Balou against yourself?'), () => {
+            this.onSelectOption();
+          });
+        } else if (this._selectedCard && this._selectedCard.type === CARD_RAG_TIME && playerId === this.player_id) {
+          this.confirmationDialog(_('Are you sure you want to use Rag Time against yourself?'), () => {
             this.onSelectOption();
           });
         } else {
@@ -403,12 +415,17 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       const CARD_PANIC = 11;
       const CARD_CAT_BALOU = 12;
+      const CARD_RAG_TIME = 29;
       if (this._selectedCard && this._selectedCard.type === CARD_PANIC && this._selectedPlayer === this.player_id) {
         this.confirmationDialog(_('Are you sure you want to use Panic! against your card?'), () => {
           this.onSelectOption();
         });
       } else if (this._selectedCard && this._selectedCard.type === CARD_CAT_BALOU && this._selectedPlayer === this.player_id) {
-        this.confirmationDialog(_('Are you sure you want to use Cat balou against your card?'), () => {
+        this.confirmationDialog(_('Are you sure you want to use Cat Balou against your card?'), () => {
+          this.onSelectOption();
+        });
+      } else if (this._selectedCard && this._selectedCard.type === CARD_RAG_TIME && this._selectedPlayer === this.player_id) {
+        this.confirmationDialog(_('Are you sure you want to use Rag Time against your card?'), () => {
           this.onSelectOption();
         });
       } else {

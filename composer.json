@@ -1,9 +1,4 @@
 {
-  "config": {
-    "platform": {
-      "php": "7.4.33"
-    }
-  },
   "autoload-dev": {
     "classmap": [
       "modules/php",
@@ -20,6 +15,9 @@
     "psr-4": {
       "Bang\\Tests\\": "tests"
     }
+  },
+  "require": {
+    "ext-json": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5",

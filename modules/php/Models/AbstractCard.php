@@ -1,32 +1,45 @@
 <?php
+
 namespace BANG\Models;
+
+use BANG\Cards\Barrel;
 use BANG\Core\Stack;
 use BANG\Managers\Cards;
 use BANG\Core\Notifications;
 use BANG\Managers\EventCards;
+use JsonSerializable;
 
 /**
  * AbstractCard: base class to handle actions cards
  *
- * @property-read $id
- * @property-read $color
+ * @property-read int $id
+ * @property-read int $color
  * @property-read int $value
- * @property-read $type
+ * @property-read int $type
  * @property-read string $name
  * @property-read string $text
  * @property-read array $symbols
  * @property-read array $effect array with type, impact and sometimes range
  * @property-read array $copies
  */
-class AbstractCard implements \JsonSerializable
+abstract class AbstractCard implements JsonSerializable
 {
-  public function __construct($params = null)
+  /**
+   * @param array{id: int|string, value?: int|string, color?: int}|null $params
+   */
+  public function __construct(?array $params = null)
   {
-    if ($params != null) {
+    if ($params !== null) {
       $this->id = (int) $params['id'];
-      if (array_key_exists('value', $params) && array_key_exists('color', $params)) {
+      if (array_key_exists('value', $params)) {
         $this->value = $params['value'];
+      }
+      if (array_key_exists('color', $params)) {
         $this->color = $params['color'];
+      }
+      if (array_key_exists('location', $params)) {
+        $locationParts = explode('_', $params['location']);
+        $this->location = $locationParts[0] ?? null;
       }
     }
   }
@@ -37,6 +50,7 @@ class AbstractCard implements \JsonSerializable
   protected $id;
   protected $color;
   protected $value;
+  protected $location;
   protected $border = '';
 
   // Static information about cards
@@ -63,7 +77,7 @@ class AbstractCard implements \JsonSerializable
   /*
    * jsonSerialize: used in frontend to manipulate cards
    */
-  public function jsonSerialize()
+  public function jsonSerialize(): array
   {
     return [
       'id' => $this->id,
@@ -71,6 +85,7 @@ class AbstractCard implements \JsonSerializable
       'color' => $this->color,
       'value' => $this->value,
       'border' => $this->border,
+      'location' => $this->location,
     ];
   }
 
@@ -85,6 +100,11 @@ class AbstractCard implements \JsonSerializable
   public function getType()
   {
     return $this->type;
+  }
+
+  public function getLocation()
+  {
+    return $this->location;
   }
 
   public function getName()
@@ -122,8 +142,12 @@ class AbstractCard implements \JsonSerializable
     return null; // Will be overwrite by Blue/Brown class
   }
 
-  public function getSuit()
+  public function getSuit(bool $includingOverride = false)
   {
+    if ($includingOverride === true) {
+      $event = EventCards::getActive();
+      return $event ? $event->getSuitOverride() : $this->color;
+    }
     return $this->color;
   }
 
@@ -137,9 +161,9 @@ class AbstractCard implements \JsonSerializable
     return $this->effect['type'];
   }
 
-  public function isEquipment()
+  public function targetLocationAfterPlay(): string
   {
-    return false;
+    return LOCATION_DISCARD;
   }
 
   public function isAction()
@@ -162,20 +186,21 @@ class AbstractCard implements \JsonSerializable
     return $this->name . ' (' . $colors[$this->color] . ' ' . $this->value . ')';
   }
 
-  public function wasPlayed()
+  public function wasPlayed(): bool
   {
+    return false;
   }
 
-  public function discard()
+  public function discard(): void
   {
     Cards::discard($this);
   }
 
   /**
    * getPlayOption : default function to know which card can be played by $player
-   * return: type of option and targets if any
+   * @return array{target_types?: int[], targets?: int[], status_bar_message?: string, confirmationMsg?: string, with_another_card?: array{strict: bool, cards: array, targets: int[]}}|null type of option and targets if any
    */
-  public function getPlayOptions($player)
+  public function getPlayOptions(Player $player): ?array
   {
     return [];
   }
@@ -184,7 +209,7 @@ class AbstractCard implements \JsonSerializable
    * play : default function to play a card that. Can be used for cards that have only symbols
    * return: null if the game should continue the play loop, "stateName" if another state need to be called
    */
-  public function play($player, $args)
+  public function play(Player $player, array $args): void
   {
   }
 
@@ -201,7 +226,7 @@ class AbstractCard implements \JsonSerializable
    * getReactionOptions: default function to handle possible reaction (attack => defense)
    * return: list of options (cards/abilities) that can be used
    */
-  public function getReactionOptions(Player $player)
+  public function getReactionOptions(Player $player): array
   {
     return $player->getDefensiveOptions();
   }
@@ -209,12 +234,17 @@ class AbstractCard implements \JsonSerializable
   /**
    * react: default function to handle reaction using a card
    */
-  public function react($card, $player)
+  public function react(AbstractCard $card, Player $player): void
   {
     if (($this->effect['type'] ?? null) == BASIC_ATTACK) {
-      if ($card->getColor() == BROWN) {
+      if ($card instanceof Barrel && $card->getLocation() === LOCATION_INPLAY) {
+        $card->activate($player);
+      } elseif ($card->getColor() === BROWN || $player->getCharacter() === ELENA_FUENTE) { // I don't like this character check here
         $card->playCard($player);
-        Notifications::cardPlayed($player, $card);
+        Notifications::cardPlayed($player, $card, ['targetLocation' => LOCATION_DISCARD]);
+      } elseif ($card instanceof GreenCard) {
+        $card->play($player, []);
+        Notifications::cardPlayed($player, $card, ['targetLocation' => LOCATION_DISCARD]);
       } else {
         // E.g. reacting to Bang! using a barrel
         $card->activate($player);
@@ -224,9 +254,8 @@ class AbstractCard implements \JsonSerializable
 
   /**
    * pass: default function to handle reaction by clicking "pass" button
-   * @param Player $player
    */
-  public function pass($player)
+  public function pass(Player $player): void
   {
     if ($this->effect['type'] === BASIC_ATTACK) {
       Stack::unsuspendNext(ST_REACT);
@@ -242,11 +271,11 @@ class AbstractCard implements \JsonSerializable
   /**
    * function to overwrite by blue cards like barrel, jail, dynamite
    */
-  public function activate($player, $args = [])
+  public function activate(Player $player, array $args = []): void
   {
   }
 
-  public function startOfTurn($player)
+  public function startOfTurn(Player $player): void
   {
   }
 }

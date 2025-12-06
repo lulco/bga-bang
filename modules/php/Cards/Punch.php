@@ -1,12 +1,16 @@
 <?php
+
 namespace BANG\Cards;
 
-use BANG\Managers\Rules;
 use BANG\Models\BangActionCard;
+use BANG\Models\BrownCard;
+use BANG\Models\Player;
 
-class Punch extends BangActionCard
+class Punch extends BrownCard
 {
-  public function __construct($params = null)
+  use BangActionCard;
+
+  public function __construct(?array $params = null)
   {
     parent::__construct($params);
     $this->type = CARD_PUNCH;
@@ -25,7 +29,7 @@ class Punch extends BangActionCard
     ];
   }
 
-  public function getPlayOptions($player)
+  public function getPlayOptions(Player $player): ?array
   {
     $playOptions = [
         'target_types' => [TARGET_PLAYER],

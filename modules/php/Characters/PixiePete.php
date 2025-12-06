@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BANG\Characters;
 
-class PixiePete extends \BANG\Models\Player{
-  public function __construct($row = null)
+use BANG\Models\Player;
+
+class PixiePete extends Player
+{
+  public function __construct(?array $row = null)
   {
     $this->character = PIXIE_PETE;
     $this->character_name = clienttranslate('Pixie Pete');
@@ -13,7 +18,7 @@ class PixiePete extends \BANG\Models\Player{
     parent::__construct($row);
   }
 
-  public function defaultCardsToDraw()
+  public function defaultCardsToDraw(): int
   {
     return 3;
   }

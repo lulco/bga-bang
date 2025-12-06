@@ -117,6 +117,7 @@ define('FISTFUL_OF_CARDS', 3);
  */
 define('BROWN', 0);
 define('BLUE', 1);
+define('GREEN', 2);
 
 define('CARD_SCHOFIELD', 0);
 define('CARD_VOLCANIC', 1);
@@ -143,7 +144,7 @@ define('CARD_MUSTANG', 21);
 
 define('CARD_PUNCH', 22);
 define('CARD_SPRINGFIELD', 23);
-define('CARD_CANNON', 24);
+define('CARD_HOWITZER', 24);
 define('CARD_DODGE', 25);
 define('CARD_WHISKY', 26);
 define('CARD_TEQUILA', 27);
@@ -151,6 +152,18 @@ define('CARD_BRAWL', 28);
 define('CARD_RAG_TIME', 29);
 define('CARD_BINOCULAR', 30);
 define('CARD_HIDEOUT', 31);
+define('CARD_PONY_EXPRESS', 32);
+define('CARD_SOMBRERO', 33);
+define('CARD_IRON_PLATE', 34);
+define('CARD_TEN_GALLON_HAT', 35);
+define('CARD_CANTEEN', 36);
+define('CARD_KNIFE', 37);
+define('CARD_PEPPERBOX', 38);
+define('CARD_BUFFALO_RIFLE', 39);
+define('CARD_CONESTOGA', 40);
+define('CARD_CAN_CAN', 41);
+define('CARD_BIBLE', 42);
+define('CARD_DERRINGER', 43);
 
 // Event cards
 define('CARD_BLESSING', 100);
@@ -276,6 +289,7 @@ define('SYMBOL_RANGE5', 12);
 define('SYMBOL_BOOK', 13);
 define('SYMBOL_DRAW_HEART', 14);
 define('SYMBOL_DYNAMITE', 15);
+define('SYMBOL_ADDITIONAL_CARD', 16);
 
 /*
  * Constants for locations
@@ -283,6 +297,7 @@ define('SYMBOL_DYNAMITE', 15);
 define('LOCATION_SELECTION', 'selection');
 define('LOCATION_HAND', 'hand');
 define('LOCATION_INPLAY', 'inPlay');
+define('LOCATION_INPLAY_INACTIVE', 'inPlayInactive');
 define('LOCATION_FLIPPED', 'flipped');
 define('LOCATION_DECK', 'deck');
 define('LOCATION_DISCARD', 'discard');

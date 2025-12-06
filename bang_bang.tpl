@@ -156,7 +156,7 @@ var jstpl_characterTooltip = `<div class="bang-character-tooltip">
 </div>`;
 
 
-var jstpl_card = `<div class="bang-card \${flipped} \${extraClass}" id="bang-card-\${uid}" data-id="\${id}" data-type="\${type}" data-border="\${border}">
+var jstpl_card = `<div class="bang-card \${flipped} \${extraClass} \${status}" id="bang-card-\${uid}" data-id="\${id}" data-type="\${type}" data-border="\${border}">
 	<div class="card-back"></div>
 	<div class="card-front">
 		<div class="card-name">\${name}</div>
@@ -178,7 +178,7 @@ var jstpl_eventCard = `<div class="bang-card \${extraClass} event" id="bang-card
 
 var jstpl_cardTooltip = `<div class="bang-card-tooltip">
 	<div class="bang-card-tooltip-sizing">
-		<div class="bang-card" id="bang-card-tooltip-\${id}" data-type="\${type}">
+		<div class="bang-card" id="bang-card-tooltip-\${id}" data-type="\${type}" data-border="\${border}">
 			<div class="card-back"></div>
 			<div class="card-front">
 				<div class="card-name">\${name}</div>
