@@ -38,6 +38,10 @@ class GameOptions
       $expansions[] = VALLEY_OF_SHADOWS;
     }
 
+    if ((bool)bang::get()->getGameStateValue('optionGoldRush')) {
+      $expansions[] = GOLD_RUSH;
+    }
+
     return $expansions;
   }
 

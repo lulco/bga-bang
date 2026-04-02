@@ -62,6 +62,7 @@ define('OPTION_HIGH_NOON_AND_FOC_EXPANSION', 114);
 define('OPTION_HIGH_NOON_OR_FOC_EXPANSION', 115);
 define('OPTION_DODGE_CITY', 116);
 define('OPTION_VALLEY_OF_SHADOWS', 117);
+define('OPTION_GOLD_RUSH', 118);
 
 /*
  * OPTION_CHOOSE_CHARACTERS values
@@ -113,6 +114,7 @@ define('HIGH_NOON', 1);
 define('DODGE_CITY', 2);
 define('FISTFUL_OF_CARDS', 3);
 define('VALLEY_OF_SHADOWS', 4);
+define('GOLD_RUSH', 5);
 
 /*
  * Cards
